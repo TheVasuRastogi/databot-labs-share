@@ -55,8 +55,7 @@ A modern, full-stack e-commerce platform for robotics products with pre-order ca
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/DataBot_Labs-website.git
-cd DataBot_Labs-website
+git clone https://github.com/bvdhaagen/DataBot_Labs-website
 ```
 
 2. Install Backend Dependencies
@@ -139,10 +138,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Team
 
-- Frontend Development: [Your Name]
-- Backend Development: [Your Name]
-- UI/UX Design: [Your Name]
+- Full Stack Developer: Vasu Rastogi
 
 ## 📞 Support
 
-For support, email [your-email@example.com] or join our Slack channel.
+For support, email [vasurastogi213@gmail.com] or join our Slack channel.
