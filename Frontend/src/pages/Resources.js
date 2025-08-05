@@ -81,7 +81,7 @@ const Resources = () => {
     {
       name: "GitHub",
       icon: <FaGithub className="w-6 h-6" />,
-      link: "https://github.com/databotlabs",
+      link: "https://github.com/bvdhaagen/goliath",
       description: "Follow our open-source projects",
       gradient: "from-gray-600 to-gray-800"
     },

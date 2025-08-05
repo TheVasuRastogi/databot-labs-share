@@ -41,10 +41,6 @@ const orderSchema = new mongoose.Schema({
                 type: String,
                 required: true
             },
-            price: {
-                type: Number,
-                required: true
-            },
             product: {
                 type: mongoose.Schema.ObjectId,
                 ref: 'Product',
@@ -74,26 +70,6 @@ const orderSchema = new mongoose.Schema({
     paidAt: {
         type: Date,
         required: true
-    },
-    itemsPrice: {
-        type: Number,
-        required: true,
-        default: 0.0
-    },
-    taxPrice: {
-        type: Number,
-        required: true,
-        default: 0.0
-    },
-    shippingPrice: {
-        type: Number,
-        required: true,
-        default: 0.0
-    },
-    totalPrice: {
-        type: Number,
-        required: true,
-        default: 0.0
     },
     orderStatus: {
         type: String,

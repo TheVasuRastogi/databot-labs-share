@@ -127,7 +127,7 @@ const Cart = () => {
         animate={{ opacity: 1 }}
         className="container mx-auto px-4 py-8 relative z-10"
       >
-        <h1 className="text-3xl font-bold text-white mb-8">Shopping Cart ({itemCount} items)</h1>
+                    <h1 className="text-3xl font-bold text-white mb-8">Your Cart ({itemCount} items)</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
@@ -150,12 +150,25 @@ const Cart = () => {
                     />
                     
                     <div className="flex-grow">
-                      <Link
-                        to={`/product/${item.product}`}
-                        className="text-xl font-semibold text-white hover:text-blue-400 transition-colors"
-                      >
-                        {item.name}
-                      </Link>
+                      <div className="flex items-center gap-3 mb-2">
+                        <Link
+                          to={`/product/${item.product}`}
+                          className="text-xl font-semibold text-white hover:text-blue-400 transition-colors"
+                        >
+                          {item.name}
+                        </Link>
+                        {item.isPreorder && (
+                          <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-sm font-medium">
+                            Pre-order
+                          </span>
+                        )}
+                      </div>
+                      
+                      {item.isPreorder && item.expectedDelivery && (
+                        <p className="text-orange-300/70 text-sm mb-2">
+                          Expected delivery: {new Date(item.expectedDelivery).toLocaleDateString()}
+                        </p>
+                      )}
                       
                       <div className="flex flex-wrap items-center gap-6 mt-4">
                         <div className="flex items-center">
@@ -250,7 +263,7 @@ const Cart = () => {
                 to="/products"
                 className="block w-full text-center text-white/70 hover:text-white mt-4 transition-colors"
               >
-                Continue Shopping
+                                      Continue Browsing
               </Link>
             </div>
           </motion.div>

@@ -7,20 +7,12 @@ exports.newOrder = async (req, res) => {
         const {
             orderItems,
             shippingInfo,
-            itemsPrice,
-            taxPrice,
-            shippingPrice,
-            totalPrice,
             paymentInfo
         } = req.body;
 
         const order = await Order.create({
             orderItems,
             shippingInfo,
-            itemsPrice,
-            taxPrice,
-            shippingPrice,
-            totalPrice,
             paymentInfo,
             paidAt: Date.now(),
             user: req.user._id
@@ -75,16 +67,23 @@ exports.getSingleOrder = async (req, res) => {
 // Get logged in user orders => /api/v1/orders/me
 exports.myOrders = async (req, res) => {
     try {
-        const orders = await Order.find({ user: req.user._id });
+        console.log('Fetching orders for user:', req.user._id);
+        const orders = await Order.find({ user: req.user._id })
+            .sort({ createdAt: -1 })
+            .populate('orderItems.product', 'name price');
 
+        console.log('Found orders:', orders.length);
+        
         res.status(200).json({
             success: true,
+            count: orders.length,
             orders
         });
     } catch (error) {
+        console.error('Error in myOrders:', error);
         res.status(500).json({
             success: false,
-            message: error.message
+            message: 'Failed to fetch your orders'
         });
     }
 };
@@ -94,14 +93,8 @@ exports.allOrders = async (req, res) => {
     try {
         const orders = await Order.find();
 
-        let totalAmount = 0;
-        orders.forEach(order => {
-            totalAmount += order.totalPrice;
-        });
-
         res.status(200).json({
             success: true,
-            totalAmount,
             orders
         });
     } catch (error) {

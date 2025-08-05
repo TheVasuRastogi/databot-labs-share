@@ -1,101 +1,107 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1';
-
+// Create axios instance with default config
 const api = axios.create({
-    baseURL: API_URL,
-    withCredentials: true,
+    baseURL: 'http://localhost:4000/api/v1',
     headers: {
         'Content-Type': 'application/json'
-    }
+    },
+    withCredentials: true
 });
 
-// Request interceptor for adding auth token
+// Add a request interceptor
 api.interceptors.request.use(
     (config) => {
+        // Add token to request if available
         const token = localStorage.getItem('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
+        // Add Accept header
+        config.headers.Accept = 'application/json';
         return config;
     },
     (error) => {
+        console.error('Request interceptor error:', error);
         return Promise.reject(error);
     }
 );
 
-// Response interceptor for handling errors
+// Add a response interceptor
 api.interceptors.response.use(
     (response) => response,
     (error) => {
+        console.error('API Error:', error.response?.data || error.message);
+        
+        // Handle 401 Unauthorized responses
         if (error.response?.status === 401) {
             localStorage.removeItem('token');
-            window.location.href = '/login';
+            // Only redirect if we're not already on the login/register page
+            if (!window.location.pathname.includes('/login') && !window.location.pathname.includes('/register')) {
+                window.location.href = '/login';
+            }
         }
         return Promise.reject(error);
     }
 );
 
-// Auth API calls
+// Auth API
 export const authAPI = {
     login: (credentials) => api.post('/auth/login', credentials),
     register: (userData) => api.post('/auth/register', userData),
-    logout: () => api.post('/auth/logout'),
+    logout: () => api.get('/auth/logout'),
     getProfile: () => api.get('/auth/me'),
-    updateProfile: (data) => api.put('/users/me', data),
+    updateProfile: (data) => api.put('/auth/me/update', data),
     updatePassword: (passwords) => api.put('/auth/password/update', passwords),
     forgotPassword: (email) => api.post('/auth/password/forgot', { email }),
     resetPassword: (token, passwords) => api.put(`/auth/password/reset/${token}`, passwords)
 };
 
-// Product API calls
+// Product API
 export const productAPI = {
     getAllProducts: (params) => api.get('/products', { params }),
-    getProduct: (id) => api.get(`/products/${id}`),
-    createReview: (id, review) => api.post(`/products/${id}/review`, review),
-    getProductReviews: (id) => api.get(`/products/${id}/reviews`),
-    deleteReview: (id, reviewId) => api.delete(`/products/${id}/reviews/${reviewId}`),
+    getProduct: (id) => api.get(`/product/${id}`),
+    createReview: (productId, review) => api.post(`/product/${productId}/review`, review),
+    getProductReviews: (id) => api.get(`/product/${id}/reviews`),
+    deleteReview: (id, reviewId) => api.delete(`/product/${id}/reviews/${reviewId}`),
     // Admin routes
-    createProduct: (productData) => api.post('/products', productData),
-    updateProduct: (id, productData) => api.put(`/products/${id}`, productData),
-    deleteProduct: (id) => api.delete(`/products/${id}`)
+    createProduct: (productData) => api.post('/admin/product/new', productData),
+    updateProduct: (id, productData) => api.put(`/admin/product/${id}`, productData),
+    deleteProduct: (id) => api.delete(`/admin/product/${id}`)
 };
 
-// Order API calls
+// Contact API
+export const contactAPI = {
+    submitContact: (data) => api.post('/contact', data)
+};
+
+// Order API
 export const orderAPI = {
-    createOrder: (orderData) => api.post('/orders', orderData),
+    createOrder: (orderData) => api.post('/orders/new', orderData),
     getOrder: (id) => api.get(`/orders/${id}`),
     myOrders: () => api.get('/orders/me'),
     // Admin routes
-    getAllOrders: () => api.get('/orders'),
-    updateOrder: (id, orderData) => api.put(`/orders/${id}`, orderData),
-    deleteOrder: (id) => api.delete(`/orders/${id}`)
+    getAllOrders: () => api.get('/admin/orders'),
+    updateOrder: (id, orderData) => api.put(`/admin/orders/${id}`, orderData),
+    deleteOrder: (id) => api.delete(`/admin/orders/${id}`)
 };
 
-// Cart API calls
+// Pre-order API
+export const preOrderAPI = {
+    submitPreOrder: (data) => api.post('/preorders', data),
+    getMyPreOrders: () => api.get('/preorders/my'),
+    // Admin routes
+    getAllPreOrders: () => api.get('/preorders'),
+    updatePreOrderStatus: (id, status) => api.patch(`/preorders/${id}`, { status })
+};
+
+// Cart API
 export const cartAPI = {
     getCart: () => api.get('/cart'),
-    addToCart: (productId, quantity) => api.post('/cart', { productId, quantity }),
-    updateCartItem: (productId, quantity) => api.put('/cart', { productId, quantity }),
-    removeFromCart: (productId) => api.delete(`/cart/${productId}`),
+    addToCart: (productId, quantity, options = {}) => api.post('/cart', { productId, quantity, ...options }),
+    updateCartItem: (itemId, quantity) => api.put(`/cart/${itemId}`, { quantity }),
+    removeFromCart: (itemId) => api.delete(`/cart/${itemId}`),
     clearCart: () => api.delete('/cart')
 };
 
-// Contact API calls
-export const contactAPI = {
-    submitContact: (contactData) => api.post('/contact', contactData),
-    // Admin routes
-    getAllContacts: () => api.get('/contact'),
-    updateContactStatus: (id, status) => api.put(`/contact/${id}`, { status }),
-    deleteContact: (id) => api.delete(`/contact/${id}`)
-};
-
-// User API calls (Admin)
-export const userAPI = {
-    getAllUsers: () => api.get('/users'),
-    getUser: (id) => api.get(`/users/${id}`),
-    updateUser: (id, userData) => api.put(`/users/${id}`, userData),
-    deleteUser: (id) => api.delete(`/users/${id}`)
-};
-
-export default api; 
+export default api;

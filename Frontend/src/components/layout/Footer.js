@@ -49,9 +49,9 @@ const Footer = () => {
           <div className="flex-1 min-w-[200px]">
             <h3 className="text-lg font-semibold mb-3">Contact Us</h3>
             <ul className="space-y-2 text-gray-200">
-              <li>Email: <a href="mailto:info@databotlabs.com" className="hover:underline">info@databotlabs.com</a></li>
-              <li>Phone: <a href="tel:5551234567" className="hover:underline">(555) 123-4567</a></li>
-              <li>Address: 123 Robot Street, Tech City, TC 12345</li>
+              <li>Email: <a href="mailto:info@databotlabs.com" className="hover:underline">b.vanderhaagen76@gmail.com</a></li>
+              <li>Phone: <a href="tel:5551234567" className="hover:underline">+31 6 43465990</a></li>
+              <li>Address: Amsterdam, The Netherlands</li>
             </ul>
           </div>
         </div>

@@ -19,7 +19,7 @@ const About = () => {
       image: "/images/team/vasu.jpg", // Use a placeholder or add this image
       bio: "Web developer dedicated to building seamless and engaging user experiences for the robotics platform.",
       linkedin: "https://linkedin.com/in/vasurastogi/", // Add real link if available
-      github: "https://github.com/TheGreatVasu/" // Add real link if available
+      github: "https://github.com/bvdhaagen/goliath"
     }
   ];
 
@@ -90,7 +90,7 @@ const About = () => {
               "description": "Innovative robotics startup specializing in AI-powered industrial automation solutions",
               "sameAs": [
                 "https://linkedin.com/company/databotlabs",
-                "https://github.com/databotlabs"
+                "https://github.com/bvdhaagen/goliath"
               ]
             }
           `}

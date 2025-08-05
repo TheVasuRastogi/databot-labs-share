@@ -13,16 +13,13 @@ const {
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
 
 // User routes
-router.route('/order/new').post(isAuthenticatedUser, newOrder);
-router.route('/order/:id').get(isAuthenticatedUser, getSingleOrder);
-router.route('/orders/me').get(isAuthenticatedUser, myOrders);
+router.get('/me', isAuthenticatedUser, myOrders); // Put specific routes first
+router.post('/new', isAuthenticatedUser, newOrder);
+router.get('/:id', isAuthenticatedUser, getSingleOrder);
 
 // Admin routes
-router
-    .route('/admin/orders')
-    .get(isAuthenticatedUser, authorizeRoles('admin'), allOrders);
-router
-    .route('/admin/order/:id')
+router.route('/admin').get(isAuthenticatedUser, authorizeRoles('admin'), allOrders);
+router.route('/admin/:id')
     .put(isAuthenticatedUser, authorizeRoles('admin'), updateOrder)
     .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteOrder);
 

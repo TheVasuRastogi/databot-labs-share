@@ -54,12 +54,6 @@ exports.productValidator = [
         .isLength({ max: 2000 })
         .withMessage('Description cannot exceed 2000 characters'),
     
-    check('price')
-        .notEmpty()
-        .withMessage('Price is required')
-        .isFloat({ min: 0 })
-        .withMessage('Price must be a positive number'),
-    
     check('category')
         .trim()
         .notEmpty()
@@ -123,8 +117,28 @@ exports.preOrderValidator = [
         .withMessage('Product is required')
         .isLength({ max: 100 })
         .withMessage('Product name cannot exceed 100 characters'),
+    check('productName')
+        .trim()
+        .notEmpty()
+        .withMessage('Product name is required')
+        .isLength({ max: 100 })
+        .withMessage('Product name cannot exceed 100 characters'),
+    check('quantity')
+        .notEmpty()
+        .withMessage('Quantity is required')
+        .isInt({ min: 1 })
+        .withMessage('Quantity must be at least 1'),
     check('message')
         .optional()
         .isLength({ max: 2000 })
-        .withMessage('Message cannot exceed 2000 characters')
+        .withMessage('Message cannot exceed 2000 characters'),
+    check('phone')
+        .notEmpty()
+        .withMessage('Phone number is required')
+        .matches(/^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,4}[-\s.]?[0-9]{1,9}$/)
+        .withMessage('Please enter a valid phone number. Supported formats include: +1234567890, 1234567890, 123-456-7890, (123) 456-7890, +91 1234567890'),
+    check('company')
+        .optional()
+        .isLength({ max: 100 })
+        .withMessage('Company name cannot exceed 100 characters')
 ];

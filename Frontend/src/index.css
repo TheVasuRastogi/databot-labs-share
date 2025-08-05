@@ -204,14 +204,60 @@ body {
   @apply antialiased text-gray-900;
 }
 
-/* Focus Styles */
-*:focus {
-  @apply outline-none ring-2 ring-black ring-offset-2;
+/* Remove focus outline for mouse users, keep for keyboard users */
+.js-focus-visible *:focus:not(.focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-/* Form Elements */
-input, textarea, select {
-  @apply focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none;
+/* Focus Styles for keyboard navigation only */
+*:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* Remove all focus outlines for mouse clicks */
+*:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Form Elements - only show focus for keyboard navigation */
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  @apply ring-2 ring-blue-500 ring-offset-2 outline-none;
+}
+
+input:focus:not(:focus-visible), textarea:focus:not(:focus-visible), select:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove focus styles for buttons, links, and interactive elements on mouse click */
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+div[role="button"]:focus:not(:focus-visible),
+[tabindex]:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove selection highlight on touch/click */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow text selection where needed */
+input, textarea, [contenteditable="true"], p, span, h1, h2, h3, h4, h5, h6 {
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
 /* Transition Defaults */

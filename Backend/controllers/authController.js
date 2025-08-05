@@ -25,17 +25,29 @@ exports.registerUser = async (req, res, next) => {
 
         const token = user.getJwtToken();
 
-        res.status(201).json({
-            success: true,
-            token,
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role
-            }
-        });
+        // Options for cookie
+        const cookieExpiresTime = parseInt(process.env.COOKIE_EXPIRES_TIME) || 7;
+        const options = {
+            expires: new Date(Date.now() + cookieExpiresTime * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'PRODUCTION',
+            sameSite: 'lax'
+        };
+
+        res.status(201)
+            .cookie('token', token, options)
+            .json({
+                success: true,
+                token,
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role
+                }
+            });
     } catch (error) {
+        console.error('Registration error:', error);
         if (error.code === 11000) {
             return next(new ErrorHandler('Email already exists', 400));
         }
@@ -78,11 +90,12 @@ exports.loginUser = async (req, res, next) => {
         const token = user.getJwtToken();
 
         // Options for cookie
+        const cookieExpiresTime = parseInt(process.env.COOKIE_EXPIRES_TIME) || 7;
         const options = {
-            expires: new Date(
-                Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-            ),
-            httpOnly: true
+            expires: new Date(Date.now() + cookieExpiresTime * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'PRODUCTION',
+            sameSite: 'lax'
         };
 
         res.status(200)
@@ -98,6 +111,7 @@ exports.loginUser = async (req, res, next) => {
                 }
             });
     } catch (error) {
+        console.error('Login error:', error);
         next(error);
     }
 };

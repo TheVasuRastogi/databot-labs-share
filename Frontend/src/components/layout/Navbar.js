@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { FaSearch, FaShoppingCart, FaBars, FaTimes, FaRobot } from 'react-icons/fa';
+import { CartContext } from '../../context/CartContext';
+import { AuthContext } from '../../context/AuthContext';
 import MiniCart from '../cart/MiniCart';
 
 const Navbar = () => {
@@ -9,8 +10,10 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMiniCartOpen, setIsMiniCartOpen] = useState(false);
-  const { itemCount } = useSelector((state) => state.cart);
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { getCartItemsCount } = useContext(CartContext);
+  const { isAuthenticated, user } = useContext(AuthContext);
+  
+  const itemCount = getCartItemsCount();
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -31,10 +34,20 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <img src="/images/databot-logo.png" alt="DataBot-Labs Logo" className="w-8 h-8" />
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="relative">
+              <img 
+                src="/images/databot-logo.jpg" 
+                alt="DataBot-Labs Logo" 
+                className="w-10 h-10 md:w-10 md:h-10 rounded-lg transition-transform duration-300 group-hover:scale-110" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+            </div>
+            <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-300 group-hover:to-purple-500 transition-all duration-300 hidden sm:inline-block">
               DataBot-Labs
+            </span>
+            <span className="text-sm font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-300 group-hover:to-purple-500 transition-all duration-300 sm:hidden">
+              DataBot
             </span>
           </Link>
 

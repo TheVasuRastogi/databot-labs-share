@@ -1,21 +1,46 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaRobot, FaRuler, FaCogs, FaMicrochip, FaBox, FaBolt, 
-  FaFilter, FaSearch, FaStar, FaArrowRight } from 'react-icons/fa';
+  FaFilter, FaSearch, FaStar, FaArrowRight, FaShoppingCart, FaPlus } from 'react-icons/fa';
+import { CartContext } from '../context/CartContext';
+import { AuthContext } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const { addToCart, loading: cartLoading } = useContext(CartContext);
+  const { isAuthenticated } = useContext(AuthContext);
+  const [addingToCart, setAddingToCart] = useState({});
+  const navigate = useNavigate();
+
+  const handlePreOrder = (product) => {
+    if (!isAuthenticated) {
+      toast.error('Please login to place a pre-order');
+      navigate('/login');
+      return;
+    }
+    
+    // Store minimal product details
+    const productDetails = {
+      name: product.name,
+      image: product.image,
+      category: product.category
+    };
+    localStorage.setItem('preOrderProduct', JSON.stringify(productDetails));
+    
+    navigate('/preorder');
+  };
 
 const products = [
   {
       id: '1',
       name: 'Robotic Arm on Linear Rail',
     category: 'Industrial',
-      price: '€8,999',
-      image: '/images/industrial-robot.jpg',
+      image: '/images/industrial-robot.svg',
       rating: 5.0,
+      isPreorder: true,
       shortDesc: 'High-precision robotic arm with linear rail system',
       highlights: [
         'Arm Length: 1.04m',
@@ -38,11 +63,11 @@ const products = [
     },
     {
       id: '2',
-      name: 'Goliath Mobile',
+      name: 'Robotic Joint Assembly',
       category: 'Mobile Robotics',
-      price: '€12,999',
-      image: '/images/industrial-robot.jpg',
+      image: '/images/20250616_110627.svg',
       rating: 4.9,
+      isPreorder: true,
       shortDesc: 'Advanced mobile robotic platform with all-terrain capabilities',
       highlights: [
         'Size: 68×42×30 cm',
@@ -66,9 +91,9 @@ const products = [
       id: '3',
       name: 'Goliath Arm (Fixed)',
       category: 'Industrial',
-      price: '€6,999',
-      image: '/images/industrial-robot.jpg',
+      image: '/images/arm.svg',
       rating: 4.8,
+      isPreorder: true,
       shortDesc: 'High-strength industrial robotic arm for automation',
       highlights: [
         'Length: 1.04m',
@@ -87,13 +112,157 @@ const products = [
         }
       },
       tags: ['industrial', 'fixed', 'automation']
+    },
+    {
+      id: '4',
+      name: 'SLAM Navigation Robot',
+      category: 'Mobile Robotics',
+      image: '/images/domestic-robot.jpg',
+      rating: 4.7,
+      price: 15999,
+      stock: 0,
+      isPreorder: true,
+      shortDesc: 'Advanced autonomous navigation robot with SLAM capabilities',
+      highlights: [
+        'Real-time Mapping',
+        'Obstacle Avoidance',
+        'Multi-floor Navigation',
+        '8-hour Battery Life'
+      ],
+      specs: {
+        navigation: {
+          sensors: 'LiDAR + Cameras',
+          mapping: 'SLAM Algorithm',
+          speed: '1.5 m/s'
+        }
+      },
+      tags: ['autonomous', 'navigation', 'slam']
+    },
+    {
+      id: '5',
+      name: 'Educational Robot Kit',
+      category: 'Educational',
+      image: '/images/educational-robot.jpg',
+      rating: 4.6,
+      price: 2999,
+      stock: 0,
+      isPreorder: true,
+      shortDesc: 'Complete educational robotics platform for learning',
+      highlights: [
+        'Modular Design',
+        'Programming Interface',
+        'Sensor Array',
+        'Educational Materials'
+      ],
+      specs: {
+        educational: {
+          platform: 'Arduino/ROS',
+          sensors: 'Ultrasonic, IMU, Camera',
+          programming: 'Scratch, Python, C++'
+        }
+      },
+      tags: ['educational', 'programming', 'learning']
+    },
+    {
+      id: '6',
+      name: 'Entertainment Robot Companion',
+      category: 'Entertainment',
+      image: '/images/entertainment-robot.jpg',
+      rating: 4.5,
+      isPreorder: true,
+      shortDesc: 'Interactive entertainment robot with AI personality',
+      highlights: [
+        'Voice Recognition',
+        'Interactive Display',
+        'AI Personality',
+        'Smart Home Integration'
+      ],
+      specs: {
+        ai: {
+          voice: 'Natural Language Processing',
+          display: '7-inch Touchscreen',
+          connectivity: 'WiFi, Bluetooth'
+        }
+      },
+      tags: ['entertainment', 'ai', 'companion']
+    },
+    {
+      id: '7',
+      name: 'Smart Gripper System',
+      category: 'Industrial',
+      image: '/images/industrial-robot.jpg',
+      rating: 4.4,
+      isPreorder: true,
+      shortDesc: 'Intelligent gripper with adaptive force control',
+      highlights: [
+        'Adaptive Force Control',
+        'Multiple Finger Options',
+        'Position Feedback',
+        'Quick-Change Mount'
+      ],
+      specs: {},
+      tags: ['gripper', 'adaptive', 'force-control']
+    },
+    {
+      id: '8',
+      name: 'Linear Slider Rail',
+      category: 'Industrial',
+      image: '/images/industrial-robot.jpg',
+      rating: 4.3,
+      isPreorder: true,
+      shortDesc: 'Precision linear motion system for extended reach',
+      highlights: [
+        '2m Travel Length',
+        'Servo-driven Control',
+        'Low Backlash Design',
+        'Cable Management'
+      ],
+      specs: {},
+      tags: ['linear', 'precision', 'motion']
+    },
+    {
+      id: '9',
+      name: 'Advanced Vision System',
+      category: 'AI & Vision',
+      image: '/images/industrial-robot.jpg',
+      rating: 4.2,
+      isPreorder: true,
+      shortDesc: 'AI-powered computer vision system for quality control',
+      highlights: [
+        'Real-time Object Detection',
+        'Quality Inspection',
+        'Machine Learning',
+        'Edge Computing'
+      ],
+      specs: {},
+      tags: ['ai', 'vision', 'quality-control']
+    },
+    {
+      id: '10',
+      name: 'Collaborative Robot',
+      category: 'Industrial',
+      image: '/images/industrial-robot.jpg',
+      rating: 4.1,
+      isPreorder: true,
+      shortDesc: 'Safe collaborative robot for human-robot interaction',
+      highlights: [
+        'Safety Certified',
+        'Force Sensing',
+        'Easy Programming',
+        'Flexible Deployment'
+      ],
+      specs: {},
+      tags: ['collaborative', 'safety', 'industrial']
     }
   ];
 
   const categories = [
     { id: 'all', name: 'All Products' },
     { id: 'industrial', name: 'Industrial' },
-    { id: 'mobile', name: 'Mobile Robotics' }
+    { id: 'mobile', name: 'Mobile Robotics' },
+    { id: 'educational', name: 'Educational' },
+    { id: 'entertainment', name: 'Entertainment' },
+    { id: 'ai', name: 'AI & Vision' }
   ];
 
   const filteredProducts = products.filter(product => {
@@ -204,26 +373,47 @@ const products = [
                     ))}
                   </div>
 
-                  {/* Price and Link */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                      {product.price}
-                    </span>
-                    <div className="flex gap-2">
-                      <Link
-                        to={`/products/${product.id}`}
-                        className="flex items-center gap-2 px-6 py-2 bg-blue-500 hover:bg-blue-600 rounded-full transition-colors duration-300"
-                      >
-                        View Details
-                        <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
-                      </Link>
-                      <Link
-                        to="/preorder"
-                        state={{ product: product.name }}
-                        className="flex items-center gap-2 px-6 py-2 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-indigo-600 transition-all duration-300 min-w-[150px] text-center"
-                      >
-                        Pre-order Now
-                      </Link>
+                  {/* Price and Stock */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                        Contact for pricing
+                      </span>
+                      <div className="text-sm">
+                        <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full">
+                          Pre-order
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-col gap-2">
+                      <div className="flex gap-2">
+                        <Link
+                          to={`/products/${product.id}`}
+                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors duration-300 text-sm"
+                        >
+                          View Details
+                          <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+                        </Link>
+                        <button
+                          onClick={() => handlePreOrder(product)}
+                          disabled={addingToCart[product.id] || (!product.isPreorder && product.stock === 0)}
+                          className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 text-sm font-medium bg-orange-500 hover:bg-orange-600 text-white ${addingToCart[product.id] ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
+                          {addingToCart[product.id] ? (
+                            <>
+                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                              Adding...
+                            </>
+                          ) : (
+                            <>
+                              <FaPlus />
+                              Pre-order
+                            </>
+                          )}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

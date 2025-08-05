@@ -236,7 +236,7 @@ int main(int argc, char** argv) {
                 Pre-order Now
               </a>
               <a
-                href="https://github.com/robotech"
+                href="https://github.com/bvdhaagen/goliath"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-6 py-3 bg-black/20 text-white font-semibold rounded-xl hover:bg-black/30 transition-all duration-300 min-w-[200px] gap-2"
@@ -291,7 +291,7 @@ int main(int argc, char** argv) {
                   <div className="flex items-center space-x-4">
                     <span className="text-xs text-white">C++17</span>
                     <a
-                      href={`https://github.com/robotech/${activeTab}-software`}
+                      href={`https://github.com/bvdhaagen/goliath`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center space-x-2 px-3 py-1 rounded-lg bg-indigo-600 text-white font-semibold shadow hover:bg-indigo-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
@@ -354,26 +354,54 @@ int main(int argc, char** argv) {
                 </h3>
                 <div className="space-y-6">
                   <div>
-                    <h4 className="text-sm font-medium text-gray-300 mb-3">1. Setup ROS Workspace</h4>
+                    <h4 className="text-sm font-medium text-gray-300 mb-3">1. System Requirements Check</h4>
                     <pre className="bg-black/30 p-4 rounded-xl text-sm overflow-x-auto">
-                      <code>{`mkdir -p ~/robotech_ws/src
-cd ~/robotech_ws/src
-git clone https://github.com/robotech/${activeTab}-software.git
+                      <code>{`# Check ROS version
+rosversion -d
+
+# Check Python version
+python3 --version
+
+# Check system dependencies
+rosdep check --from-paths src`}</code>
+                    </pre>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-300 mb-3">2. Setup ROS Workspace</h4>
+                    <pre className="bg-black/30 p-4 rounded-xl text-sm overflow-x-auto">
+                      <code>{`# Create and initialize workspace
+mkdir -p ~/goliath_ws/src
+cd ~/goliath_ws/src
+git clone https://github.com/bvdhaagen/goliath.git
+
+# Install dependencies
+rosdep install --from-paths src --ignore-src -r -y
+
+# Build workspace
 cd ..
 catkin_make`}</code>
                     </pre>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-gray-300 mb-3">2. Source Workspace</h4>
+                    <h4 className="text-sm font-medium text-gray-300 mb-3">3. Source & Launch</h4>
                     <pre className="bg-black/30 p-4 rounded-xl text-sm overflow-x-auto">
-                      <code>source ~/robotech_ws/devel/setup.bash</code>
+                      <code>{`# Source workspace
+source ~/goliath_ws/devel/setup.bash
+
+# Launch application
+roslaunch goliath_${activeTab} ${activeTab}_node.launch`}</code>
                     </pre>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-gray-300 mb-3">3. Launch Application</h4>
-                    <pre className="bg-black/30 p-4 rounded-xl text-sm overflow-x-auto">
-                      <code>{`roslaunch robotech_${activeTab} ${activeTab}_node.launch`}</code>
-                    </pre>
+                    <h4 className="text-sm font-medium text-gray-300 mb-3">4. Contact Support</h4>
+                    <div className="bg-black/30 p-4 rounded-xl text-sm">
+                      <p className="text-white/80 mb-2">If you encounter any issues during setup or need assistance:</p>
+                      <ul className="list-disc list-inside space-y-1 text-white/70">
+                        <li>Open an issue on <a href="https://github.com/bvdhaagen/goliath/issues" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300">GitHub Issues</a></li>
+                        <li>Contact our support team at <a href="mailto:support@databot-labs.com" className="text-indigo-400 hover:text-indigo-300">support@databot-labs.com</a></li>
+                        <li>Check our <a href="/resources" className="text-indigo-400 hover:text-indigo-300">Documentation</a> for troubleshooting guides</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>

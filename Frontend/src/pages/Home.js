@@ -241,97 +241,85 @@ const Home = () => {
     },
   ];
 
-  const [featuredProducts] = useState([
+  // Replace featuredProducts with products from Products.js
+  const featuredProducts = [
     {
-      id: 1,
-      name: 'Advanced Robotic Arm',
+      id: '1',
+      name: 'Robotic Arm on Linear Rail',
       category: 'Industrial',
-      price: '€4,999',
-      image: '/images/industrial-robot.jpg',
-      rating: 4.9,
-      specs: [
-        'Arm Length: 1.04 meters',
-        'Weight: 17 kg',
-        'Payload: 5 kg',
-        'Precision: ±0.1 mm',
-        'ISO 9409-1 Compatible'
-      ],
-      features: {
-        construction: [
-          'Aluminum alloy frame with steel reinforcement',
-          'Hardened bearings for minimal backlash',
-          'Closed-loop NEMA 17/23 stepper motors',
-          'Steel flange end effector'
-        ],
-        control: [
-          'TMC5160 drivers',
-          'STM32F466RET6 controller',
-          'ROS2 Moveit2 compatible'
-        ]
-      },
-      description: 'High-precision industrial robotic arm with advanced control systems and versatile end-effector compatibility.'
-    },
-    {
-      id: 2,
-      name: 'Linear Rail System',
-      category: 'Industrial',
-      price: '€2,999',
-      image: '/images/industrial-robot.jpg',
-      rating: 4.8,
-      specs: [
-        'Standard Length: 1-2.5 meters',
-        'Positioning Accuracy: ±0.05 mm',
-        'Travel Speed: 0.5-1 m/s',
-        'Heavy-duty construction',
-        'Integrated cable management'
-      ],
-      features: {
-        rail: [
-          'HIWIN profile guide rail',
-          'Preloaded ball bearings',
-          'High-rigidity movement',
-          'Energy chain system'
-        ],
-        drive: [
-          'NEMA 23 stepper/servo motor',
-          'Precision ball screw',
-          'Encoder feedback',
-          'Aluminum/steel base plate'
-        ]
-      },
-      description: 'Professional-grade linear rail system with high precision and robust construction for industrial automation.'
-    },
-    {
-      id: 3,
-      name: 'Complete Robotic System',
-      category: 'Industrial',
-      price: '€7,499',
-      image: '/images/industrial-robot.jpg',
+      image: '/images/industrial-robot.svg',
       rating: 5.0,
-      specs: [
+      shortDesc: 'High-precision robotic arm with linear rail system',
+      highlights: [
+        'Arm Length: 1.04m',
         'Total Reach: up to 3.54m',
-        'Combined Precision: ±0.1 mm',
-        'Integrated Control System',
-        'Advanced Path Planning',
-        'Full Cable Management'
+        'Precision: ±0.1mm',
+        'ROS2 Compatible'
       ],
-      features: {
-        integration: [
-          'Arm + Rail combined system',
-          'Unified control interface',
-          'Extended workspace range',
-          'Enhanced payload capacity'
-        ],
-        software: [
-          'Custom G-code support',
-          'ROS2 Moveit2 integration',
-          'Real-time path planning',
-          'Advanced safety features'
-        ]
+      specs: {
+        arm: {
+          length: '1.04 meters',
+          weight: '17 kg',
+          payload: '5 kg'
+        },
+        rail: {
+          length: '1-2.5 meters',
+          accuracy: '±0.05 mm'
+        }
       },
-      description: 'Complete automation solution combining our advanced robotic arm with precision linear rail system.'
+      tags: ['industrial', 'automation', 'precision']
+    },
+    {
+      id: '2',
+      name: 'Robotic Joint Assembly',
+      category: 'Mobile Robotics',
+      image: '/images/20250616_110627.svg',
+      rating: 4.9,
+      shortDesc: 'Advanced mobile robotic platform with all-terrain capabilities',
+      highlights: [
+        'Size: 68×42×30 cm',
+        'Weight: 35 kg',
+        '4× 80W BLDC Motors',
+        'LIDAR Navigation'
+      ],
+      specs: {
+        physical: {
+          dimensions: '68×42×30 cm',
+          weight: '35 kg'
+        },
+        drive: {
+          motors: '4× 80W BLDC',
+          battery: '24V/48V'
+        }
+      },
+      tags: ['mobile', 'autonomous', 'all-terrain']
+    },
+    {
+      id: '3',
+      name: 'Goliath Arm (Fixed)',
+      category: 'Industrial',
+      image: '/images/arm.svg',
+      rating: 4.8,
+      shortDesc: 'High-strength industrial robotic arm for automation',
+      highlights: [
+        'Length: 1.04m',
+        'Weight: 17 kg',
+        'Industrial Grade',
+        'High Precision'
+      ],
+      specs: {
+        physical: {
+          length: '1.04 meters',
+          weight: '17 kg'
+        },
+        construction: {
+          frame: 'Aluminum + Steel',
+          mount: 'ISO 9409-1'
+        }
+      },
+      tags: ['industrial', 'fixed', 'automation']
     }
-  ]);
+  ];
 
   const testimonials = [
     {
@@ -380,7 +368,6 @@ const Home = () => {
   const products = [
     {
       title: "Arm Only",
-      price: "€7,800",
       description: "Complete robotic arm solution with advanced control system",
       features: [
         "6-axis precision control",
@@ -398,7 +385,6 @@ const Home = () => {
     },
     {
       title: "Mobile SLAM Base",
-      price: "€3,400",
       description: "Autonomous navigation platform with SLAM capabilities",
       features: [
         "Real-time mapping",
@@ -416,7 +402,6 @@ const Home = () => {
     },
     {
       title: "Linear Slider Rail",
-      price: "€800",
       description: "Precision linear motion system for extended reach",
       features: [
         "2m travel length",
@@ -434,7 +419,6 @@ const Home = () => {
     },
     {
       title: "Gripper",
-      price: "€150",
       description: "Versatile end-effector for precise manipulation",
       features: [
         "Adaptive grip force",
@@ -586,7 +570,7 @@ const Home = () => {
 
             {/* Key Specifications */}
             <div className="space-y-2">
-              {product.specs.map((spec, i) => (
+              {(product.highlights || []).map((spec, i) => (
                 <div key={i} className="flex items-center text-sm text-gray-300">
                   <FaCheckCircle className="text-blue-400 mr-2" />
                   <span>{spec}</span>
@@ -632,6 +616,12 @@ const Home = () => {
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
+        {/* Footer-style background overlays */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 pointer-events-none z-0"></div>
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:100px_100px] pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:100px_100px] pointer-events-none"></div>
+        </div>
         {/* 3D Animated Gradient Blobs */}
         <div className="absolute inset-0 pointer-events-none z-0">
           <div className="absolute top-10 left-10 w-80 h-80 bg-gradient-to-br from-purple-500 via-blue-400 to-blue-300 opacity-60 rounded-full blur-3xl animate-blob3d1" ref={blob1} />
@@ -677,8 +667,7 @@ const Home = () => {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0"
               >
-                Discover our cutting-edge robotic solutions that combine advanced AI, 
-                precision engineering, and intuitive design to transform your world.
+               Modular 6-DOF Semi-Industrial Robot Arm – Customizable for Any Task
               </motion.p>
 
               <motion.div 
@@ -866,298 +855,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-32 bg-black text-white overflow-hidden relative">
-        {/* Background effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-gradient-slow"></div>
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          {/* Section Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
-              <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Explore Our Categories
-              </span>
-              <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></div>
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Discover the perfect robotic solution for your specific needs
-            </p>
-          </motion.div>
-
-          {/* Categories Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {categories.map((category, index) => (
-              <motion.div
-                key={category.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group"
-              >
-                <Link to={category.link} className="block">
-                  <div className="relative p-6 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 
-                    hover:border-white/20 transition-all duration-500 h-full overflow-hidden">
-                    {/* Hover effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    {/* Icon with gradient background */}
-                    <div className="relative z-10 mb-6">
-                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center
-                        group-hover:scale-110 transition-transform duration-500">
-                        {category.icon}
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative z-10">
-                      <h3 className="text-2xl font-semibold mb-3 text-white group-hover:text-purple-400 transition-colors duration-300">
-                        {category.title}
-                      </h3>
-                      <p className="text-gray-400 mb-6 group-hover:text-gray-300 transition-colors duration-300">
-                        {category.description}
-                      </p>
-                      <div className="flex items-center text-purple-400 group-hover:text-purple-300 transition-colors duration-300">
-                        <span className="mr-2">Learn More</span>
-                        <FaArrowRight className="group-hover:translate-x-2 transition-transform duration-300" />
-                      </div>
-                    </div>
-
-                    {/* Decorative elements */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-full blur-2xl 
-                      group-hover:scale-150 transition-transform duration-500"></div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Statistics Section */}
-      <section className="py-24 bg-black relative overflow-hidden">
-        {/* Background effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-gradient-slow"></div>
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative group"
-              >
-                <div className="p-8 rounded-2xl bg-gradient-to-br from-white/10 to-transparent backdrop-blur-sm border border-white/10 
-                  hover:border-white/20 transition-all duration-500 text-center relative overflow-hidden">
-                  {/* Hover effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  {/* Content */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="relative z-10"
-                  >
-                    <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-2
-                      group-hover:scale-110 transition-transform duration-300">
-                      {stat.value}
-                    </div>
-                    <div className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
-                      {stat.label}
-                    </div>
-                  </motion.div>
-
-                  {/* Decorative elements */}
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-full blur-xl
-                    group-hover:scale-150 transition-transform duration-500"></div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-32 bg-black text-white overflow-hidden relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-gradient-slow"></div>
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-purple-400 via-blue-400 to-pink-400 bg-clip-text text-transparent drop-shadow-lg tracking-tight animate-fade-in-up">
-              What Our Clients Say
-            </h2>
-            <p className="text-blue-200 text-xl max-w-2xl mx-auto font-light animate-fade-in-up delay-100">
-              Discover why leading organizations trust our robotic solutions
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {testimonials.map((testimonial, idx) => (
-              <div
-                key={testimonial.id}
-                className={
-                  `relative rounded-3xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-xl border-2 border-transparent hover:border-gradient-to-r hover:from-purple-400 hover:to-blue-400 transition-all duration-500 flex flex-col items-start min-h-[240px] group animate-float${idx % 2 === 0 ? '' : '2'} hover:scale-105 hover:shadow-3xl` +
-                  (idx === 2 ? ' bg-gradient-to-br from-purple-700/30 to-blue-700/30' : '')
-                }
-                style={{ transition: 'transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s' }}
-              >
-                <div className="flex items-center gap-4 p-6 pb-2 w-full">
-                  <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-purple-400 via-blue-400 to-pink-400 shadow-lg border-4 border-white/20 flex items-center justify-center overflow-hidden">
-                    <span className="text-white text-lg font-semibold z-10 relative drop-shadow-lg">
-                      {testimonial.name.split(' ').map((n, i) => i === 0 ? n : <span key={i}><br/>{n}</span>)}
-                    </span>
-                    <div className="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-green-400 border-2 border-white"></div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-white mb-1">
-                      {testimonial.name}
-                    </div>
-                    <div className="text-blue-200 text-base font-medium mb-1">
-                      {testimonial.role} <span className="text-blue-400 font-normal">@ {testimonial.company}</span>
-                    </div>
-                  </div>
-                  <div className="ml-auto text-white/40 text-2xl">"</div>
-                </div>
-                <div className="px-6 pb-6 pt-2 text-lg text-white/90 font-light">
-                  {testimonial.content}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="py-32 bg-black text-white overflow-hidden relative">
-        {/* Background effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-gradient-slow"></div>
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              {/* Icon */}
-              <motion.div
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="mb-6"
-              >
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center mx-auto
-                  group-hover:scale-110 transition-transform duration-500">
-                  <FaEnvelope className="text-2xl text-white" />
-                </div>
-              </motion.div>
-
-              {/* Content */}
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  Stay Updated
-                </span>
-              </h2>
-              <p className="text-gray-400 text-lg mb-8">
-                Subscribe to our newsletter for the latest updates in robotics and automation.
-              </p>
-
-              {/* Form */}
-              {!isSubscribed ? (
-                <motion.form
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  onSubmit={handleSubscribe}
-                  className="relative"
-                >
-                  <div className="relative flex flex-col sm:flex-row gap-4 justify-center max-w-xl mx-auto">
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email"
-                      className="flex-grow px-6 py-4 bg-white/5 backdrop-blur-sm rounded-full text-white border border-white/10 
-                        focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 transition-all duration-300
-                        placeholder-gray-400"
-                      required
-                    />
-                    <button
-                      type="submit"
-                      className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white font-semibold
-                        hover:opacity-90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400/20
-                        flex items-center justify-center group"
-                    >
-                      Subscribe
-                      <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                    </button>
-                  </div>
-                </motion.form>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm rounded-full py-4 px-8 inline-block"
-                >
-                  <span className="text-gradient text-lg">Thank you for subscribing! 🎉</span>
-                </motion.div>
-              )}
-
-              {/* Privacy note */}
-              <p className="mt-6 text-sm text-gray-400">
-                We respect your privacy. Unsubscribe at any time.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Decorative elements */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-full blur-3xl"
-        ></motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"
-        ></motion.div>
-      </section>
-
       {/* Pricing Transparency Section */}
       <section className="py-32 bg-black text-white overflow-hidden relative">
         {/* Background effects */}
@@ -1268,14 +965,14 @@ const Home = () => {
             <p className="text-gray-200 text-lg mb-8 max-w-2xl mx-auto">
               Join the future of robotics and discover how our solutions can transform your life.
             </p>
-            <a
-              href="#products"
+            <Link
+              to="/products"
               className="inline-flex items-center bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-full font-semibold shadow hover:from-blue-600 hover:to-purple-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg group"
               aria-label="Browse Our Collection"
             >
               Browse Our Collection
               <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-            </a>
+            </Link>
           </div>
         </div>
       </section>

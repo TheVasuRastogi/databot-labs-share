@@ -6,7 +6,7 @@ import {
   FaClock, FaCheckCircle
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import { contactAPI } from '../utils/api';
 import { toast } from 'react-toastify';
 
 const Contact = () => {
@@ -14,7 +14,7 @@ const Contact = () => {
     name: '',
     email: '',
     subject: '',
-    message: '',
+    message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -28,10 +28,9 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/v1/contact`,
-        formData
-      );
+      console.log('Submitting contact form:', formData);
+      const response = await contactAPI.submitContact(formData);
+      console.log('Contact form response:', response.data);
 
       setIsSubmitted(true);
       toast.success('Message sent successfully! We will contact you soon.');
@@ -47,6 +46,7 @@ const Contact = () => {
       // Reset success message after 3 seconds
       setTimeout(() => setIsSubmitted(false), 3000);
     } catch (error) {
+      console.error('Contact form error:', error);
       toast.error(error.response?.data?.message || 'Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -70,7 +70,7 @@ const Contact = () => {
     {
       name: "GitHub",
       icon: <FaGithub className="w-6 h-6" />,
-      link: "https://github.com/databotlabs",
+      link: "https://github.com/bvdhaagen/goliath",
       color: "hover:text-gray-500"
     },
     {
@@ -98,16 +98,10 @@ const Contact = () => {
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[#030014]" />
         <div className="absolute inset-0 bg-grid-white/[0.08] bg-[length:50px_50px]" />
-        
-        {/* Gradient orbs */}
         <div className="absolute -top-[500px] -left-[500px] w-[1000px] h-[1000px] bg-purple-500/40 rounded-full filter blur-[120px]" />
         <div className="absolute -bottom-[500px] -right-[500px] w-[1000px] h-[1000px] bg-blue-500/40 rounded-full filter blur-[120px]" />
-        
-        {/* Grid overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f30_1px,transparent_1px)] bg-[size:100px_100px]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#4f4f4f30_1px,transparent_1px)] bg-[size:100px_100px]" />
-        
-        {/* Additional ambient light */}
         <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/5 via-transparent to-blue-500/5" />
       </div>
 
@@ -318,4 +312,4 @@ const Contact = () => {
   );
 };
 
-export default Contact; 
+export default Contact;

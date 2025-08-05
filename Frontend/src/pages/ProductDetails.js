@@ -1,21 +1,49 @@
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaArrowLeft, FaCheckCircle, FaCogs, FaRobot, FaTools, FaCode, 
   FaChartLine, FaShieldAlt, FaMicrochip, FaBox, FaRuler, FaBolt, 
-  FaWrench, FaCloudDownloadAlt, FaGithub } from 'react-icons/fa';
+  FaWrench, FaCloudDownloadAlt, FaGithub, FaShoppingCart, FaPlus, FaMinus } from 'react-icons/fa';
+import { CartContext } from '../context/CartContext';
+import { AuthContext } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('specs');
+  const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useContext(CartContext);
+  const { isAuthenticated } = useContext(AuthContext);
+  const [addingToCart, setAddingToCart] = useState(false);
+  const navigate = useNavigate();
+
+  const handleAddToCart = async () => {
+    if (!isAuthenticated) {
+      toast.error('Please login to add items to cart');
+      navigate('/login');
+      return;
+    }
+
+    try {
+      setAddingToCart(true);
+      await addToCart(id, quantity, { isPreorder: product?.isPreorder });
+      toast.success(product?.isPreorder ? 'Added to cart as pre-order!' : 'Added to cart successfully!');
+    } catch (error) {
+      toast.error(error.message || error.response?.data?.message || 'Failed to add to cart');
+    } finally {
+      setAddingToCart(false);
+    }
+  };
 
   const products = {
     '1': {
       name: 'Robotic Arm on Linear Rail',
       category: 'Industrial',
-      price: '€8,999',
-      image: '/images/industrial-robot.jpg',
+      image: '/images/industrial-robot.svg',
       rating: 5.0,
+      price: 25999,
+      stock: 5,
+      isPreorder: false,
       description: 'High-precision robotic arm mounted on a linear rail system, combining versatility with extended reach capabilities.',
       specs: {
         arm: {
@@ -97,92 +125,259 @@ const ProductDetails = () => {
       }
     },
     '2': {
-      name: 'Goliath Mobile',
+      name: 'Robotic Joint Assembly',
       category: 'Mobile Robotics',
-      price: '€12,999',
-      image: '/images/industrial-robot.jpg',
+      image: '/images/20250616_110627.svg',
       rating: 4.9,
-      description: 'Advanced mobile robotic platform with all-terrain capabilities and modular design.',
-      specs: {
+      price: 18999,
+      stock: 0,
+      isPreorder: true,
+      description: 'Precision robotic joint assembly with high-torque motors and integrated control for articulated robotic arms.',
+  specs: {
         physical: {
           title: 'Physical Specifications',
           items: [
-            { label: 'Dimensions', value: '68×42×30 cm (L×W×H)' },
-            { label: 'Weight', value: '35 kg' },
-            { label: 'Frame', value: 'Aluminum + Carbon Fiber' },
-            { label: 'Suspension', value: 'Independent/Rigid Axle' },
-            { label: 'Wheels', value: 'All-terrain/Mecanum' },
-            { label: 'Construction', value: 'Hybrid chassis design' }
+            { label: 'Dimensions', value: '12×12×8 cm (L×W×H)' },
+            { label: 'Weight', value: '2.5 kg' },
+            { label: 'Material', value: 'Anodized Aluminum + Hardened Steel' },
+            { label: 'Mounting', value: 'Standard ISO flange or customizable adapter' },
+            { label: 'Rotation Range', value: '±180 degrees' },
+            { label: 'Sealing', value: 'IP65-rated housing' }
           ]
         },
         drive: {
           title: 'Drive System',
           items: [
-            { label: 'Motors', value: '4× 80W BLDC/Stepper' },
-            { label: 'Transmission', value: 'Direct/Planetary' },
-            { label: 'Battery', value: '24V/48V Li-ion/LiFePO₄' },
-            { label: 'Controller', value: 'CAN UART/ROS-compatible' },
-            { label: 'Voltage', value: '42 volt system' },
-            { label: 'Drive Type', value: 'Independent wheel control' }
+            { label: 'Motor Type', value: 'High-torque BLDC/Servo motor' },
+            { label: 'Gearbox', value: 'Precision Harmonic Drive' },
+            { label: 'Torque', value: 'Up to 75 Nm continuous' },
+            { label: 'Encoder', value: 'Absolute rotary encoder' },
+            { label: 'Controller', value: 'Integrated CANopen/RS485' },
+            { label: 'Voltage', value: '24V/48V compatible' }
           ]
         },
         sensors: {
           title: 'Sensor Suite',
           items: [
-            { label: 'Navigation', value: 'Wheel Encoders + IMU' },
-            { label: 'Mapping', value: 'LIDAR system' },
-            { label: 'Stabilization', value: 'Integrated IMU' },
-            { label: 'Autonomy', value: 'LIDAR-based' },
-            { label: 'Feedback', value: 'Multi-sensor fusion' },
-            { label: 'Positioning', value: 'Odometry + IMU' }
+            { label: 'Position Feedback', value: 'High-resolution encoder' },
+            { label: 'Torque Sensing', value: 'Optional integrated torque sensor' },
+            { label: 'Temperature', value: 'Internal thermal monitoring' },
+            { label: 'Vibration', value: 'Built-in vibration detection' },
+            { label: 'Limit Detection', value: 'Programmable electronic limits' },
+            { label: 'Health Monitoring', value: 'Real-time diagnostics' }
           ]
         }
       },
       features: [
         {
-          title: 'All-Terrain',
-          icon: <FaRobot />,
-          description: 'Capable of navigating various surfaces'
+          title: 'Precision Motion',
+          icon: <FaCogs />,
+          description: 'Smooth and accurate joint rotation with minimal backlash'
         },
         {
-          title: 'Modular Design',
-          icon: <FaBox />,
-          description: 'Customizable configuration options'
-        },
-        {
-          title: 'Advanced Control',
+          title: 'High Torque',
           icon: <FaBolt />,
-          description: '42V system with BLDC motors'
+          description: 'Capable of handling heavy payloads in articulated arms'
+        },
+        {
+          title: 'Integrated Control',
+          icon: <FaMicrochip />,
+          description: 'Onboard controller with CAN/RS485 interface'
         }
+    
       ],
       technical: {
         chassis: [
-          'Hybrid aluminum-carbon fiber frame',
-          'Independent/rigid axle options',
-          'All-terrain wheel configurations',
-          'Modular mounting system',
-          'Integrated cable management',
-          'Weather-resistant design'
+          'Compact and robust harmonic gearbox',
+      'Low backlash for precise movement',
+      'ISO standard mounting flange',
+      'Integrated cable routing',
+      'IP65-sealed housing for dust and moisture protection'
         ],
         electronics: [
-          '80W BLDC hub motors',
-          'CAN UART control system',
-          'Advanced battery management',
-          'Sensor integration hub',
-          'Real-time monitoring',
-          'Power distribution system'
+         'High-resolution absolute encoder',
+      'Integrated motor driver with safety features',
+      'Temperature and vibration sensors',
+      'CANopen and RS485 communication interfaces',
+      'Optional torque sensing module'
         ],
         software: [
-          'ROS 2 navigation stack',
-          'Autonomous operation',
-          'Sensor fusion',
-          'Path planning',
-          'Obstacle avoidance',
-          'Remote monitoring'
+         'Compatible with ROS and industrial PLCs',
+      'Supports trajectory planning',
+      'Real-time feedback and diagnostics',
+      'Torque and speed control modes',
+      'Programmable soft limits'
         ]
       }
+    },
+    '3': {
+      name: 'Goliath Arm (Fixed)',
+      category: 'Industrial',
+      image: '/images/arm.svg',
+      rating: 4.8,
+      price: 22999,
+      stock: 3,
+      isPreorder: false,
+      description: 'High-strength industrial robotic arm for automation, built for precision and reliability in demanding environments.',
+      specs: {
+        physical: {
+          title: 'Physical Specifications',
+          items: [
+            { label: 'Length', value: '1.04 meters' },
+            { label: 'Weight', value: '17 kg' },
+            { label: 'Frame', value: 'Aluminum + Steel' },
+            { label: 'Mount', value: 'ISO 9409-1' },
+            { label: 'Payload', value: '5 kg' },
+            { label: 'Precision', value: 'High accuracy' }
+          ]
+        },
+        motors: {
+          title: 'Motor & Control',
+          items: [
+            { label: 'Motors', value: 'Industrial-grade, closed-loop' },
+            { label: 'Control', value: 'Closed-loop stepper/servo' },
+            { label: 'Feedback', value: 'Encoder feedback' }
+          ]
+        }
+      },
+      features: [
+        {
+          title: 'Heavy Duty',
+          icon: <FaBox />,
+          description: 'Built for continuous, industrial operation'
+        },
+        {
+          title: 'Precision',
+          icon: <FaCogs />,
+          description: 'High accuracy for repetitive tasks'
+        },
+        {
+          title: 'Versatile Mount',
+          icon: <FaTools />,
+          description: 'ISO 9409-1 compatible, easy integration'
+        }
+      ],
+      technical: {
+        construction: [
+          'Aluminum and steel frame',
+          'ISO 9409-1 mounting flange',
+          'Industrial-grade bearings',
+          'Low maintenance design'
+        ],
+        electronics: [
+          'Closed-loop stepper/servo motors',
+          'Encoder feedback system',
+          'Industrial control interface'
+        ],
+        software: [
+          'Compatible with ROS and industrial PLCs',
+          'Supports trajectory planning',
+          'Real-time feedback and diagnostics'
+        ]
+      }
+    },
+    '4': {
+      name: 'Coming Soon Product 1',
+      category: 'Industrial',
+      image: '',
+      rating: 0,
+      description: 'Coming soon',
+      specs: {},
+      features: [],
+      technical: {}
+    },
+    '5': {
+      name: 'Coming Soon Product 2',
+      category: 'Mobile Robotics',
+      image: '',
+      rating: 0,
+      description: 'Coming soon',
+      specs: {},
+      features: [],
+      technical: {}
+    },
+    '6': {
+      name: 'Coming Soon Product 3',
+      category: 'Industrial',
+      image: '',
+      rating: 0,
+      description: 'Coming soon',
+      specs: {},
+      features: [],
+      technical: {}
+    },
+    '7': {
+      name: 'Coming Soon Product 4',
+      category: 'Mobile Robotics',
+      image: '',
+      rating: 0,
+      description: 'Coming soon',
+      specs: {},
+      features: [],
+      technical: {}
+    },
+    '8': {
+      name: 'Coming Soon Product 5',
+      category: 'Industrial',
+      image: '',
+      rating: 0,
+      description: 'Coming soon',
+      specs: {},
+      features: [],
+      technical: {}
+    },
+    '9': {
+      name: 'Coming Soon Product 6',
+      category: 'Mobile Robotics',
+      image: '',
+      rating: 0,
+      description: 'Coming soon',
+      specs: {},
+      features: [],
+      technical: {}
+    },
+    '10': {
+      name: 'Coming Soon Product 7',
+      category: 'Industrial',
+      image: '',
+      rating: 0,
+      description: 'Coming soon',
+      specs: {},
+      features: [],
+      technical: {}
+    },
+    '11': {
+      name: 'Coming Soon Product 8',
+      category: 'Mobile Robotics',
+      image: '',
+      rating: 0,
+      description: 'Coming soon',
+      specs: {},
+      features: [],
+      technical: {}
+    },
+    '12': {
+      name: 'Coming Soon Product 9',
+      category: 'Industrial',
+      image: '',
+      rating: 0,
+      description: 'Coming soon',
+      specs: {},
+      features: [],
+      technical: {}
+    },
+    '13': {
+      name: 'Coming Soon Product 10',
+      category: 'Mobile Robotics',
+      image: '',
+      rating: 0,
+      description: 'Coming soon',
+      specs: {},
+      features: [],
+      technical: {}
     }
   };
+  
 
   const product = products[id];
 
@@ -245,20 +440,85 @@ const ProductDetails = () => {
                       {product.name}
                   </h1>
               <p className="text-gray-400 text-lg mb-4">{product.description}</p>
-              <div className="flex items-center gap-4">
-                <span className="text-3xl font-bold text-white">
-                  {product.price}
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <span className="text-3xl font-bold text-white">
+                    {product.isPreorder ? 'Contact for pricing' : product.price ? `$${product.price.toLocaleString()}` : 'Contact for pricing'}
                   </span>
-                <span className="px-3 py-1 bg-blue-500/10 text-blue-400 rounded-full text-sm">
-                  {product.category}
+                  <span className="px-3 py-1 bg-blue-500/10 text-blue-400 rounded-full text-sm">
+                    {product.category}
                   </span>
-                <Link
-                  to="/preorder"
-                  state={{ product: product.name }}
-                  className="ml-4 px-6 py-2 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-indigo-600 transition-all duration-300 min-w-[150px] text-center"
-                >
-                  Pre-order Now
-                </Link>
+                  {product.isPreorder ? (
+                    <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-sm">
+                      Pre-order
+                    </span>
+                  ) : product.stock > 0 ? (
+                    <span className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm">
+                      In Stock ({product.stock})
+                    </span>
+                  ) : (
+                    <span className="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-sm">
+                      Out of Stock
+                    </span>
+                  )}
+                </div>
+
+                {/* Quantity and Add to Cart */}
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-white/70">Quantity:</span>
+                    <div className="flex items-center bg-white/5 rounded-lg border border-white/10">
+                      <button
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="p-2 hover:bg-white/10 rounded-l-lg transition-colors"
+                        disabled={quantity === 1}
+                      >
+                        <FaMinus className={quantity === 1 ? 'text-white/30' : 'text-white/70'} />
+                      </button>
+                      <span className="px-4 py-2 text-white font-medium min-w-[50px] text-center">
+                        {quantity}
+                      </span>
+                      <button
+                        onClick={() => setQuantity(Math.min(product.stock || 999, quantity + 1))}
+                        className="p-2 hover:bg-white/10 rounded-r-lg transition-colors"
+                        disabled={!product.isPreorder && quantity >= product.stock}
+                      >
+                        <FaPlus className={(!product.isPreorder && quantity >= product.stock) ? 'text-white/30' : 'text-white/70'} />
+                      </button>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={handleAddToCart}
+                    disabled={addingToCart || (!product.isPreorder && product.stock === 0)}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors duration-300 ${
+                      product.isPreorder
+                        ? 'bg-orange-500 hover:bg-orange-600 text-white'
+                        : product.stock > 0
+                        ? 'bg-green-500 hover:bg-green-600 text-white'
+                        : 'bg-gray-500 cursor-not-allowed text-gray-300'
+                    } ${addingToCart ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    {addingToCart ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Adding...
+                      </>
+                    ) : product.isPreorder ? (
+                      <>
+                        <FaPlus />
+                        Add Pre-order to Cart
+                      </>
+                    ) : product.stock > 0 ? (
+                      <>
+                        <FaShoppingCart />
+                        Add to Cart
+                      </>
+                    ) : (
+                      'Out of Stock'
+                    )}
+                  </button>
+                </div>
               </div>
           </div>
 
@@ -284,7 +544,7 @@ const ProductDetails = () => {
                 <p className="text-sm text-gray-400">Available on GitHub with ROS2 support</p>
               </div>
               <Link
-                to="https://github.com/your-repo"
+                to="https://github.com/bvdhaagen/goliath"
                 className="ml-auto px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors duration-200"
                 target="_blank"
               >

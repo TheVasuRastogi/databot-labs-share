@@ -33,7 +33,6 @@ const initialState = {
     error: null,
     filters: {
         category: '',
-        priceRange: [0, 10000],
         sortBy: 'createdAt',
         page: 1,
         limit: 12

@@ -1,34 +1,48 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { cartAPI } from '../utils/api';
+import { AuthContext } from './AuthContext';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [cart, setCart] = useState({ items: [] });
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { isAuthenticated } = useContext(AuthContext);
 
     useEffect(() => {
-        fetchCart();
-    }, []);
+        if (isAuthenticated) {
+            fetchCart();
+        } else {
+            setCart({ items: [] });
+            setLoading(false);
+        }
+    }, [isAuthenticated]);
 
     const fetchCart = async () => {
         try {
+            setLoading(true);
+            setError(null);
             const { data } = await cartAPI.getCart();
-            setCart(data.cart);
+            setCart(data.cart || { items: [] });
         } catch (error) {
             console.error('Error fetching cart:', error);
             setError(error.response?.data?.message || 'Error fetching cart');
+            setCart({ items: [] }); // Set empty cart on error
         } finally {
             setLoading(false);
         }
     };
 
-    const addToCart = async (productId, quantity = 1) => {
+    const addToCart = async (productId, quantity = 1, options = {}) => {
+        if (!isAuthenticated) {
+            throw new Error('Please login to add items to cart');
+        }
+        
         try {
             setError(null);
-            const { data } = await cartAPI.addToCart(productId, quantity);
-            setCart(data.cart);
+            const { data } = await cartAPI.addToCart(productId, quantity, options);
+            setCart(data.cart || { items: [] });
             return data;
         } catch (error) {
             setError(error.response?.data?.message || 'Error adding to cart');
@@ -36,10 +50,10 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-    const updateCartItem = async (productId, quantity) => {
+    const updateCartItem = async (itemId, quantity) => {
         try {
             setError(null);
-            const { data } = await cartAPI.updateCartItem(productId, quantity);
+            const { data } = await cartAPI.updateCartItem(itemId, quantity);
             setCart(data.cart);
             return data;
         } catch (error) {
@@ -48,10 +62,10 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-    const removeFromCart = async (productId) => {
+    const removeFromCart = async (itemId) => {
         try {
             setError(null);
-            const { data } = await cartAPI.removeFromCart(productId);
+            const { data } = await cartAPI.removeFromCart(itemId);
             setCart(data.cart);
             return data;
         } catch (error) {
@@ -64,7 +78,7 @@ export const CartProvider = ({ children }) => {
         try {
             setError(null);
             await cartAPI.clearCart();
-            setCart([]);
+            setCart({ items: [] });
         } catch (error) {
             setError(error.response?.data?.message || 'Error clearing cart');
             throw error;
@@ -72,11 +86,11 @@ export const CartProvider = ({ children }) => {
     };
 
     const getCartTotal = () => {
-        return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        return (cart.items || []).reduce((total, item) => total + (item.price * item.quantity), 0);
     };
 
     const getCartItemsCount = () => {
-        return cart.reduce((total, item) => total + item.quantity, 0);
+        return (cart.items || []).reduce((total, item) => total + item.quantity, 0);
     };
 
     const value = {

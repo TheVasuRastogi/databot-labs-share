@@ -1,7 +1,7 @@
 {
-  "name": "robot-shop-backend",
+  "name": "databot-labs-backend",
   "version": "1.0.0",
-  "description": "Backend for Robot E-commerce Platform",
+  "description": "Backend for DataBot-Labs Robotics Platform",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

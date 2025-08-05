@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const MiniCart = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
-  const { cartItems, itemCount, subtotal } = useSelector((state) => state.cart);
+  const { cartItems, itemCount } = useSelector((state) => state.cart);
 
   const handleRemoveItem = (itemId) => {
     dispatch(removeFromCart(itemId));
@@ -104,29 +104,6 @@ const MiniCart = ({ isOpen, onClose }) => {
                     </div>
 
                     {/* Cart Summary */}
-                    <div className="mt-4 pt-4 border-t border-white/10">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-white/70">Subtotal</span>
-                        <span className="text-white font-medium">${subtotal.toFixed(2)}</span>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Link
-                          to="/cart"
-                          onClick={onClose}
-                          className="block w-full text-center bg-white/10 text-white py-2 rounded-lg hover:bg-white/20 transition-colors"
-                        >
-                          View Cart
-                        </Link>
-                        <Link
-                          to="/checkout"
-                          onClick={onClose}
-                          className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-colors"
-                        >
-                          Checkout
-                        </Link>
-                      </div>
-                    </div>
                   </>
                 )}
               </div>

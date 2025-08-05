@@ -1,5 +1,6 @@
 import React from "react";
-import { FaRobot, FaMapMarkedAlt, FaArrowsAltH, FaHandRock, FaCheckCircle } from "react-icons/fa";
+import { FaRobot, FaMapMarkedAlt, FaArrowsAltH, FaHandRock, FaCheckCircle, FaArrowRight } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
 const iconMap = {
   "Arm Only": <FaRobot className="text-4xl text-white" />,
@@ -14,6 +15,17 @@ const badgeMap = {
 };
 
 export default function PricingCard({ product }) {
+  const navigate = useNavigate();
+
+  const handlePreOrder = () => {
+    // Store product details in localStorage
+    localStorage.setItem('preOrderProduct', JSON.stringify({
+      name: product.title,
+      category: product.title, // Using title as category since it's the product type
+      image: '/images/industrial-robot.jpg' // Default image, you might want to add images to your product data
+    }));
+    navigate('/preorder');
+  };
   const badge = badgeMap[product.title];
   return (
     <div
@@ -38,7 +50,6 @@ export default function PricingCard({ product }) {
         </span>
       </div>
       <h3 className="text-2xl font-bold text-white mb-2">{product.title}</h3>
-      <div className="text-3xl font-extrabold text-blue-400 mb-2">{product.price}</div>
       <p className="text-white/80 mb-4">{product.description}</p>
       <h4 className="text-blue-300 font-semibold mb-1">Key Features</h4>
       <ul className="mb-4 space-y-1">
@@ -56,13 +67,28 @@ export default function PricingCard({ product }) {
           </li>
         ))}
       </ul>
-      <button
-        className="mt-auto bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-2 rounded-full text-center shadow hover:from-blue-600 hover:to-purple-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400"
-        onClick={() => window.location.href = product.link}
-        aria-label={`Learn more about ${product.title}`}
-      >
-        Learn More
-      </button>
+      <div className="mt-auto space-y-3">
+        <Link
+          to={product.link || "/products"}
+          className="block w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-2 rounded-full text-center shadow hover:from-blue-600 hover:to-purple-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400 group"
+          aria-label={`Learn more about ${product.title}`}
+        >
+          <span className="flex items-center justify-center">
+            Learn More
+            <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+          </span>
+        </Link>
+        <button
+          onClick={handlePreOrder}
+          className="block w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold py-2 rounded-full text-center shadow hover:from-orange-600 hover:to-red-600 transition focus:outline-none focus:ring-2 focus:ring-orange-400 group"
+          aria-label={`Pre-order ${product.title}`}
+        >
+          <span className="flex items-center justify-center">
+            Pre-order Now
+            <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+          </span>
+        </button>
+      </div>
     </div>
   );
 } 
