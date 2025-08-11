@@ -37,6 +37,25 @@ const team = require('./routes/team');
 const milestones = require('./routes/milestones');
 const cart = require('./routes/cart');
 
+// Root route
+app.get('/', (req, res) => {
+    res.json({
+        success: true,
+        message: 'Welcome to DataBot Labs API',
+        version: '1.0.0',
+        documentation: '/api/v1/docs',
+        endpoints: {
+            auth: '/api/v1/auth',
+            products: '/api/v1/products',
+            orders: '/api/v1/orders',
+            contact: '/api/v1/contact',
+            team: '/api/v1/team',
+            milestones: '/api/v1/milestones',
+            cart: '/api/v1/cart'
+        }
+    });
+});
+
 // Test route
 app.get('/api/v1/test', (req, res) => {
     res.json({
