@@ -46,7 +46,7 @@ function App() {
                 <CartProvider>
                     <div className="flex flex-col min-h-screen bg-black text-white">
                         <Header />
-                        <main className="flex-grow pt-16 sm:pt-20">
+                        <main className="flex-grow pt-16 sm:pt-20 min-h-[calc(100vh-4rem)]">
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/login" element={<Login />} />

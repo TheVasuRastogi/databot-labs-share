@@ -30,8 +30,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
-      <div className="container mx-auto px-2 sm:px-4">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/10">
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 sm:space-x-3 group">
@@ -113,7 +113,9 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-white/70 hover:text-white transition-colors duration-300"
+            className="md:hidden p-2 text-white/90 hover:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-lg"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
           </button>
@@ -121,8 +123,15 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`fixed inset-0 bg-black/95 backdrop-blur-lg z-40 transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} md:hidden`}>
-        <div className="h-full flex flex-col">
+      <div 
+        className={`fixed inset-0 bg-black/95 backdrop-blur-lg z-50 transition-all duration-300 ${
+          isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        } md:hidden`}
+        aria-hidden={!isMenuOpen}
+      >
+        <div className={`h-full flex flex-col transform transition-transform duration-300 ${
+          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}>
           {/* Mobile Menu Header */}
           <div className="flex items-center justify-between px-4 py-4 border-b border-white/10">
             <Link to="/" className="flex items-center space-x-2" onClick={() => setIsMenuOpen(false)}>
@@ -136,6 +145,7 @@ const Navbar = () => {
             <button
               onClick={() => setIsMenuOpen(false)}
               className="text-white/70 hover:text-white p-2"
+              aria-label="Close menu"
             >
               <FaTimes className="w-6 h-6" />
             </button>
