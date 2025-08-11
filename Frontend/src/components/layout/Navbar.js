@@ -2,247 +2,142 @@ import React, { useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CartContext } from '../../context/CartContext';
 import { AuthContext } from '../../context/AuthContext';
-import MiniCart from '../cart/MiniCart';
-import * as FaIcons from 'react-icons/fa';
+import { FaBars, FaTimes, FaShoppingCart, FaUser } from 'react-icons/fa';
 
 const Navbar = () => {
-  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isMiniCartOpen, setIsMiniCartOpen] = useState(false);
+  const location = useLocation();
   const { getCartItemsCount } = useContext(CartContext);
   const { isAuthenticated, user } = useContext(AuthContext);
   
   const itemCount = getCartItemsCount();
 
   const navItems = [
-    { name: 'Home', path: '/', icon: <FaIcons.FaHome className="w-5 h-5" /> },
-    { name: 'Product', path: '/products', icon: <FaIcons.FaRobot className="w-5 h-5" /> },
-    { name: 'Software', path: '/software', icon: <FaIcons.FaCogs className="w-5 h-5" /> },
-    { name: 'About us', path: '/about', icon: <FaIcons.FaUsers className="w-5 h-5" /> },
-    { name: 'Support/Resources', path: '/resources', icon: <FaIcons.FaHeadset className="w-5 h-5" /> },
-    { name: 'Blog/News', path: '/blog', icon: <FaIcons.FaNewspaper className="w-5 h-5" /> },
-    { name: 'Contact us', path: '/contact', icon: <FaIcons.FaEnvelope className="w-5 h-5" /> }
+    { name: 'Home', path: '/' },
+    { name: 'Products', path: '/products' },
+    { name: 'Software', path: '/software' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' }
   ];
 
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/10">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 sm:space-x-3 group">
-            <div className="relative">
-              <img 
-                src="/images/databot-logo.jpg" 
-                alt="DataBot-Labs Logo" 
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg transition-transform duration-300 group-hover:scale-110" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-            </div>
-            <span className="text-base sm:text-lg md:text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-300 group-hover:to-purple-500 transition-all duration-300 hidden sm:inline-block">
+          <Link to="/" className="flex items-center">
+            <img 
+              src="/images/databot-logo.jpg" 
+              alt="DataBot-Labs Logo" 
+              className="w-8 h-8 rounded-lg"
+            />
+            <span className="ml-2 text-white font-bold text-lg hidden sm:block">
               DataBot-Labs
             </span>
-            <span className="text-sm font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-300 group-hover:to-purple-500 transition-all duration-300 sm:hidden">
+            <span className="ml-2 text-white font-bold text-lg sm:hidden">
               DataBot
             </span>
           </Link>
 
-          {/* Center Navigation */}
-          <div className="hidden lg:flex flex-1 justify-center items-center space-x-6">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-4">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 group
-                  ${isActive(item.path) 
-                    ? 'text-white bg-white/5 border border-white/10' 
-                    : 'text-white/70 hover:text-white hover:bg-white/5'}`}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200
+                  ${isActive(item.path)
+                    ? 'bg-gray-900 text-white'
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                  }`}
               >
-                <span className={`transition-colors duration-300 ${isActive(item.path) ? 'text-purple-400' : 'text-white/50 group-hover:text-purple-400'}`}>
-                  {item.icon}
-                </span>
                 {item.name}
               </Link>
             ))}
           </div>
 
           {/* Right Section */}
-          <div className="hidden md:flex items-center space-x-6">
-            {/* Search Button */}
-            <button
-              onClick={() => setIsSearchOpen(true)}
-              className="text-white/70 hover:text-white transition-colors duration-300"
-            >
-              <FaIcons.FaSearch className="w-5 h-5" />
-            </button>
-
-            {/* Cart */}
-            <div className="relative">
-              <Link
-                to="/cart"
-                className="text-white/70 hover:text-white transition-colors duration-300 relative"
-              >
-                <FaIcons.FaShoppingCart className="w-5 h-5" />
-                {itemCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-white text-black text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                    {itemCount}
-                  </span>
-                )}
-              </Link>
-            </div>
-
-            {/* Auth */}
-            {isAuthenticated ? (
-              <Link
-                to="/profile"
-                className="px-4 py-2 text-sm font-medium text-white bg-white/10 rounded-full hover:bg-white/20 transition-all duration-300"
-              >
-                {user?.name || 'Profile'}
-              </Link>
-            ) : (
-              <Link
-                to="/login"
-                className="px-4 py-2 text-sm font-medium text-white bg-white/10 rounded-full hover:bg-white/20 transition-all duration-300"
-              >
-                Login
-              </Link>
-            )}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 bg-white/5 hover:bg-white/10 text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-lg border border-white/10"
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isMenuOpen}
-          >
-            {isMenuOpen ? <FaIcons.FaTimes className="w-6 h-6" /> : <FaIcons.FaBars className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <div 
-        className={`fixed inset-0 bg-black/95 backdrop-blur-lg z-50 transition-all duration-300 ${
-          isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        } md:hidden`}
-        aria-hidden={!isMenuOpen}
-      >
-        <div className={`h-full flex flex-col transform transition-transform duration-300 ${
-          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}>
-          {/* Mobile Menu Header */}
-          <div className="flex items-center justify-between px-4 py-4 border-b border-white/10">
-            <Link to="/" className="flex items-center space-x-2" onClick={() => setIsMenuOpen(false)}>
-              <img 
-                src="/images/databot-logo.jpg" 
-                alt="DataBot-Labs Logo" 
-                className="w-8 h-8 rounded-lg" 
-              />
-              <span className="text-sm font-bold text-white">DataBot-Labs</span>
+          <div className="hidden md:flex items-center space-x-4">
+            <Link to="/cart" className="text-gray-300 hover:text-white relative">
+              <FaShoppingCart className="h-6 w-6" />
+              {itemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {itemCount}
+                </span>
+              )}
             </Link>
-            <button
-              onClick={() => setIsMenuOpen(false)}
-              className="text-white/70 hover:text-white p-2"
-              aria-label="Close menu"
+            <Link
+              to={isAuthenticated ? "/profile" : "/login"}
+              className="flex items-center space-x-2 text-gray-300 hover:text-white"
             >
-              <FaIcons.FaTimes className="w-6 h-6" />
-            </button>
+              <FaUser className="h-6 w-6" />
+              <span className="text-sm font-medium">
+                {isAuthenticated ? (user?.name || 'Profile') : 'Login'}
+              </span>
+            </Link>
           </div>
 
-          {/* Mobile Menu Content */}
-          <div className="flex-1 overflow-y-auto py-4">
-            <div className="px-4 space-y-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all duration-300
-                    ${isActive(item.path) 
-                      ? 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-white border border-white/10' 
-                      : 'text-white/70 hover:bg-white/5 hover:text-white'}`}
-                >
-                  <span className="text-purple-400/80">{item.icon}</span>
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-
-            {/* Mobile Search */}
-            <div className="px-8 py-4">
-              <div className="relative">
-                <FaIcons.FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="w-full bg-white/5 border border-white/10 rounded-lg py-2 pl-10 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-white/20 text-sm"
-                />
-              </div>
-            </div>
-
-            {/* Mobile Cart & Profile */}
-            <div className="px-4 py-4 border-t border-white/10">
-              <div className="space-y-2">
-                <Link
-                  to="/cart"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center justify-between px-4 py-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors duration-300"
-                >
-                  <div className="flex items-center space-x-3">
-                    <FaIcons.FaShoppingCart className="w-5 h-5 text-white/70" />
-                    <span className="text-white font-medium">Cart</span>
-                  </div>
-                  {itemCount > 0 && (
-                    <span className="bg-white text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                      {itemCount}
-                    </span>
-                  )}
-                </Link>
-
-                <Link
-                  to={isAuthenticated ? "/profile" : "/login"}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block px-4 py-3 text-center text-white font-medium bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-colors duration-300"
-                >
-                  {isAuthenticated ? user?.name || "Profile" : "Login"}
-                </Link>
-              </div>
-            </div>
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-gray-300 hover:text-white p-2"
+              aria-label="Main menu"
+            >
+              {isMenuOpen ? (
+                <FaTimes className="h-6 w-6" />
+              ) : (
+                <FaBars className="h-6 w-6" />
+              )}
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Search Overlay */}
-      {isSearchOpen && (
-        <div className="fixed inset-0 bg-black/95 backdrop-blur-md z-50">
-          <div className="container mx-auto px-4 h-full flex items-center justify-center">
-            <div className="w-full max-w-2xl">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-bold text-white">Search</h2>
-                <button
-                  onClick={() => setIsSearchOpen(false)}
-                  className="text-white/70 hover:text-white transition-colors duration-300"
-                >
-                  <FaIcons.FaTimes className="w-6 h-6" />
-                </button>
-              </div>
-              <div className="relative">
-                <FaIcons.FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/40 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search products, software, or resources..."
-                  className="w-full bg-white/10 border border-white/20 rounded-full py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-white/40 transition-all duration-300"
-                />
-              </div>
-            </div>
+      {/* Mobile menu */}
+      <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
+        <div className="px-2 pt-2 pb-3 space-y-1 bg-black/90">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              onClick={() => setIsMenuOpen(false)}
+              className={`block px-3 py-2 rounded-md text-base font-medium ${
+                isActive(item.path)
+                  ? 'bg-gray-900 text-white'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+              }`}
+            >
+              {item.name}
+            </Link>
+          ))}
+          <div className="border-t border-gray-700 pt-4 pb-3">
+            <Link
+              to="/cart"
+              onClick={() => setIsMenuOpen(false)}
+              className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+            >
+              <FaShoppingCart className="h-6 w-6 mr-3" />
+              Cart
+              {itemCount > 0 && (
+                <span className="ml-2 bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {itemCount}
+                </span>
+              )}
+            </Link>
+            <Link
+              to={isAuthenticated ? "/profile" : "/login"}
+              onClick={() => setIsMenuOpen(false)}
+              className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+            >
+              <FaUser className="h-6 w-6 mr-3" />
+              {isAuthenticated ? (user?.name || 'Profile') : 'Login'}
+            </Link>
           </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 };
