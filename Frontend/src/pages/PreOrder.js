@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaArrowLeft } from 'react-icons/fa';
+import { preOrderAPI } from '../utils/api';
 
 const LOCAL_STORAGE_KEY = 'preorder_form';
 
@@ -79,22 +80,8 @@ const PreOrder = () => {
         expectedDelivery: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000) // 60 days from now
       };
 
-      const res = await fetch('http://localhost:4000/api/v1/preorders', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify(preOrderData)
-      });
+      const { data } = await preOrderAPI.submitPreOrder(preOrderData);
       
-      const data = await res.json();
-      
-      if (!res.ok) {
-        throw new Error(data.message || 'Failed to submit pre-order');
-      }
-
       if (!data.success) {
         throw new Error(data.message || 'Failed to submit pre-order');
       }
