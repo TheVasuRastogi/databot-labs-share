@@ -1,21 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  FaSearch, 
-  FaShoppingCart, 
-  FaBars, 
-  FaTimes, 
-  FaRobot,
-  FaHome,
-  FaCogs,
-  FaUsers,
-  FaHeadset,
-  FaNewspaper,
-  FaEnvelope
-} from 'react-icons/fa';
 import { CartContext } from '../../context/CartContext';
 import { AuthContext } from '../../context/AuthContext';
 import MiniCart from '../cart/MiniCart';
+import * as FaIcons from 'react-icons/fa';
 
 const Navbar = () => {
   const location = useLocation();
@@ -28,13 +16,13 @@ const Navbar = () => {
   const itemCount = getCartItemsCount();
 
   const navItems = [
-    { name: 'Home', path: '/', icon: <FaHome className="w-5 h-5" /> },
-    { name: 'Product', path: '/products', icon: <FaRobot className="w-5 h-5" /> },
-    { name: 'Software', path: '/software', icon: <FaCogs className="w-5 h-5" /> },
-    { name: 'About us', path: '/about', icon: <FaUsers className="w-5 h-5" /> },
-    { name: 'Support/Resources', path: '/resources', icon: <FaHeadset className="w-5 h-5" /> },
-    { name: 'Blog/News', path: '/blog', icon: <FaNewspaper className="w-5 h-5" /> },
-    { name: 'Contact us', path: '/contact', icon: <FaEnvelope className="w-5 h-5" /> }
+    { name: 'Home', path: '/', icon: <FaIcons.FaHome className="w-5 h-5" /> },
+    { name: 'Product', path: '/products', icon: <FaIcons.FaRobot className="w-5 h-5" /> },
+    { name: 'Software', path: '/software', icon: <FaIcons.FaCogs className="w-5 h-5" /> },
+    { name: 'About us', path: '/about', icon: <FaIcons.FaUsers className="w-5 h-5" /> },
+    { name: 'Support/Resources', path: '/resources', icon: <FaIcons.FaHeadset className="w-5 h-5" /> },
+    { name: 'Blog/News', path: '/blog', icon: <FaIcons.FaNewspaper className="w-5 h-5" /> },
+    { name: 'Contact us', path: '/contact', icon: <FaIcons.FaEnvelope className="w-5 h-5" /> }
   ];
 
   const isActive = (path) => {
@@ -89,7 +77,7 @@ const Navbar = () => {
               onClick={() => setIsSearchOpen(true)}
               className="text-white/70 hover:text-white transition-colors duration-300"
             >
-              <FaSearch className="w-5 h-5" />
+              <FaIcons.FaSearch className="w-5 h-5" />
             </button>
 
             {/* Cart */}
@@ -98,7 +86,7 @@ const Navbar = () => {
                 to="/cart"
                 className="text-white/70 hover:text-white transition-colors duration-300 relative"
               >
-                <FaShoppingCart className="w-5 h-5" />
+                <FaIcons.FaShoppingCart className="w-5 h-5" />
                 {itemCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-white text-black text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
                     {itemCount}
@@ -132,7 +120,7 @@ const Navbar = () => {
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
           >
-            {isMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
+            {isMenuOpen ? <FaIcons.FaTimes className="w-6 h-6" /> : <FaIcons.FaBars className="w-6 h-6" />}
           </button>
         </div>
       </div>
@@ -162,7 +150,7 @@ const Navbar = () => {
               className="text-white/70 hover:text-white p-2"
               aria-label="Close menu"
             >
-              <FaTimes className="w-6 h-6" />
+              <FaIcons.FaTimes className="w-6 h-6" />
             </button>
           </div>
 
@@ -188,7 +176,7 @@ const Navbar = () => {
             {/* Mobile Search */}
             <div className="px-8 py-4">
               <div className="relative">
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
+                <FaIcons.FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
                 <input
                   type="text"
                   placeholder="Search..."
@@ -206,7 +194,7 @@ const Navbar = () => {
                   className="flex items-center justify-between px-4 py-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors duration-300"
                 >
                   <div className="flex items-center space-x-3">
-                    <FaShoppingCart className="w-5 h-5 text-white/70" />
+                    <FaIcons.FaShoppingCart className="w-5 h-5 text-white/70" />
                     <span className="text-white font-medium">Cart</span>
                   </div>
                   {itemCount > 0 && (
@@ -240,11 +228,11 @@ const Navbar = () => {
                   onClick={() => setIsSearchOpen(false)}
                   className="text-white/70 hover:text-white transition-colors duration-300"
                 >
-                  <FaTimes className="w-6 h-6" />
+                  <FaIcons.FaTimes className="w-6 h-6" />
                 </button>
               </div>
               <div className="relative">
-                <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/40 w-5 h-5" />
+                <FaIcons.FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/40 w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search products, software, or resources..."
