@@ -1,6 +1,18 @@
 import React, { useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaSearch, FaShoppingCart, FaBars, FaTimes, FaRobot } from 'react-icons/fa';
+import { 
+  FaSearch, 
+  FaShoppingCart, 
+  FaBars, 
+  FaTimes, 
+  FaRobot,
+  FaHome,
+  FaCogs,
+  FaUsers,
+  FaHeadset,
+  FaNewspaper,
+  FaEnvelope
+} from 'react-icons/fa';
 import { CartContext } from '../../context/CartContext';
 import { AuthContext } from '../../context/AuthContext';
 import MiniCart from '../cart/MiniCart';
