@@ -578,32 +578,32 @@ const Home = () => {
               ))}
             </div>
 
-            <div className="flex justify-between items-center">
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                {product.price}
-              </span>
-              <div className="flex gap-2">
-                <Link
-                  to={`/products/${product.id}`}
-                  className="relative overflow-hidden px-6 py-2 rounded-full group/button"
-                >
-                  {/* Button Background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-75 group-hover/button:opacity-100 transition-opacity duration-300"></div>
-                  {/* Button Content */}
-                  <span className="relative flex items-center gap-2 text-white font-medium">
-                    View Details
-                    <FaArrowRight className="group-hover/button:translate-x-1 transition-transform duration-300" />
-                  </span>
-                </Link>
-                <Link
-                  to="/preorder"
-                  state={{ product: product.name }}
-                  className="relative overflow-hidden px-6 py-2 rounded-full border-2 border-white text-white font-semibold hover:bg-white hover:text-indigo-600 transition-all duration-300 min-w-[150px] text-center"
-                >
-                  Pre-order Now
-                </Link>
+                          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                  {product.price}
+                </span>
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                  <Link
+                    to={`/products/${product.id}`}
+                    className="relative overflow-hidden px-4 sm:px-6 py-2 rounded-full group/button w-full sm:w-auto text-center"
+                  >
+                    {/* Button Background */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-75 group-hover/button:opacity-100 transition-opacity duration-300"></div>
+                    {/* Button Content */}
+                    <span className="relative flex items-center justify-center gap-2 text-white font-medium">
+                      View Details
+                      <FaArrowRight className="group-hover/button:translate-x-1 transition-transform duration-300" />
+                    </span>
+                  </Link>
+                  <Link
+                    to="/preorder"
+                    state={{ product: product.name }}
+                    className="relative overflow-hidden px-4 sm:px-6 py-2 rounded-full border-2 border-white text-white font-semibold hover:bg-white hover:text-indigo-600 transition-all duration-300 w-full sm:w-auto text-center"
+                  >
+                    Pre-order Now
+                  </Link>
+                </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
@@ -653,7 +653,7 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 tracking-tight"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 tracking-tight"
               >
                 Next Generation
                 <span className="block mt-2 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -665,7 +665,7 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0"
+                className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0"
               >
                Modular 6-DOF Semi-Industrial Robot Arm – Customizable for Any Task
               </motion.p>
@@ -838,7 +838,7 @@ const Home = () => {
           </motion.div>
           
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {featuredProducts.map((product, index) => renderProductCard(product, index))}
           </div>
           {/* View More Button */}
@@ -892,19 +892,19 @@ const Home = () => {
           <h2 className="text-4xl font-bold text-center mb-16 text-white relative z-10">
             Why Choose Us?
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {whyChooseUs.map((item) => (
               <div
                 key={item.title}
-                className="group relative p-8 rounded-3xl bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl flex flex-col items-center transition-transform duration-300 hover:scale-105 hover:shadow-2xl focus-within:scale-105 focus-within:shadow-2xl outline-none cursor-pointer"
+                className="group relative p-6 sm:p-8 rounded-3xl bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl flex flex-col items-center transition-transform duration-300 hover:scale-105 hover:shadow-2xl focus-within:scale-105 focus-within:shadow-2xl outline-none cursor-pointer"
                 tabIndex={0}
                 aria-label={item.title}
               >
-                <span className={`inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br ${item.gradient} shadow-lg group-hover:animate-pulse group-focus:animate-pulse`}>
+                <span className={`inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 mb-4 rounded-full bg-gradient-to-br ${item.gradient} shadow-lg group-hover:animate-pulse group-focus:animate-pulse`}>
                   {item.icon}
                 </span>
-                <h3 className="text-xl font-semibold mb-2 text-white text-center">{item.title}</h3>
-                <p className="text-gray-300 text-center">{item.description}</p>
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 text-white text-center">{item.title}</h3>
+                <p className="text-sm sm:text-base text-gray-300 text-center">{item.description}</p>
               </div>
             ))}
           </div>
@@ -958,16 +958,16 @@ const Home = () => {
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
         </div>
         <div className="container mx-auto px-4 relative z-10 flex justify-center">
-          <div className="w-full max-w-3xl mx-auto p-12 rounded-3xl bg-white/10 backdrop-blur-lg border-2 border-transparent bg-clip-padding shadow-xl flex flex-col items-center text-center transition-all duration-500 hover:shadow-2xl ring-1 ring-blue-400/30">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-gradient-slow">
+          <div className="w-full max-w-3xl mx-auto p-6 sm:p-8 md:p-12 rounded-3xl bg-white/10 backdrop-blur-lg border-2 border-transparent bg-clip-padding shadow-xl flex flex-col items-center text-center transition-all duration-500 hover:shadow-2xl ring-1 ring-blue-400/30">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-gradient-slow">
               Ready to Get Started?
             </h2>
-            <p className="text-gray-200 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-200 text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto px-4 sm:px-0">
               Join the future of robotics and discover how our solutions can transform your life.
             </p>
             <Link
               to="/products"
-              className="inline-flex items-center bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-full font-semibold shadow hover:from-blue-600 hover:to-purple-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg group"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 sm:px-8 py-3 rounded-full font-semibold shadow hover:from-blue-600 hover:to-purple-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-base sm:text-lg group"
               aria-label="Browse Our Collection"
             >
               Browse Our Collection
