@@ -43,22 +43,8 @@ const Profile = () => {
     setLoading(true);
     setError('');
     try {
-      // Only fetch pre-orders
-      const response = await fetch('http://localhost:4000/api/v1/preorders/my', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        credentials: 'include'
-      });
-
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to fetch pre-orders');
-      }
-
+      // Fetch pre-orders using API utility
+      const { data } = await preOrderAPI.getMyPreOrders();
       setPreOrders(data.data || []);
       console.log('Pre-orders loaded:', data.data?.length);
     } catch (err) {

@@ -68,6 +68,12 @@ const emailTemplates = {
 // Send email function
 const sendEmail = async (template, data) => {
     try {
+        console.log('Attempting to send email with template:', template);
+        console.log('Email configuration:', {
+            adminEmail: process.env.ADMIN_EMAIL,
+            hasPassword: !!process.env.ADMIN_EMAIL_PASSWORD
+        });
+
         const emailContent = emailTemplates[template](data);
         
         const mailOptions = {
@@ -77,11 +83,22 @@ const sendEmail = async (template, data) => {
             html: emailContent.html
         };
 
+        console.log('Sending email with options:', {
+            from: mailOptions.from,
+            to: mailOptions.to,
+            subject: mailOptions.subject
+        });
+
         const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent:', info.messageId);
+        console.log('Email sent successfully:', info.messageId);
         return true;
     } catch (error) {
-        console.error('Email sending failed:', error);
+        console.error('Email sending failed. Full error:', error);
+        console.error('Error details:', {
+            code: error.code,
+            command: error.command,
+            response: error.response
+        });
         return false;
     }
 };
