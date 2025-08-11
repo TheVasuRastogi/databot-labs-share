@@ -32,17 +32,35 @@ A modern, full-stack e-commerce platform for robotics products with pre-order ca
 ## 🛠️ Tech Stack
 
 ### Frontend
-- React.js
-- Redux for state management
-- Tailwind CSS for styling
-- React Router for navigation
-- Framer Motion for animations
+- **React.js (v18+)** - Modern UI development
+- **Redux Toolkit** - State management
+- **Tailwind CSS** - Utility-first styling
+- **React Router v6** - Client-side routing
+- **Framer Motion & GSAP** - Advanced animations
+- **Axios** - HTTP client
+- **React Hook Form** - Form handling
+- **React Toastify** - Notifications
+- **React Helmet Async** - SEO optimization
 
 ### Backend
-- Node.js & Express.js
-- MongoDB with Mongoose
-- JWT for authentication
-- Express Validator for input validation
+- **Node.js & Express.js** - Server runtime & API framework
+- **MongoDB & Mongoose** - Database & ODM
+- **JWT** - Authentication & Authorization
+- **Express Validator** - Input validation
+- **Multer** - File uploads
+- **Nodemailer** - Email services
+- **Helmet** - Security middleware
+- **CORS** - Cross-origin resource sharing
+
+### Development & Tools
+- **Git** - Version control
+- **npm/yarn** - Package management
+- **ESLint & Prettier** - Code quality
+- **Jest** - Testing
+- **PM2** - Process management
+- **Nodemon** - Development server
+
+For a complete breakdown of our tech stack, see [TECH_STACK.md](TECH_STACK.md)
 
 ## 🚀 Getting Started
 
