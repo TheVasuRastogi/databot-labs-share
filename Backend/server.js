@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: ['http://localhost:3000', 'http://localhost:3001', process.env.FRONTEND_URL],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
@@ -36,6 +36,15 @@ const preorders = require('./routes/preorders');
 const team = require('./routes/team');
 const milestones = require('./routes/milestones');
 const cart = require('./routes/cart');
+
+// Test route
+app.get('/api/v1/test', (req, res) => {
+    res.json({
+        success: true,
+        message: 'API is working!',
+        timestamp: new Date().toISOString()
+    });
+});
 
 // Mount routes
 app.use('/api/v1/auth', auth);
