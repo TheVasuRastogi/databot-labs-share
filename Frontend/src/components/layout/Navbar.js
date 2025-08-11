@@ -16,13 +16,13 @@ const Navbar = () => {
   const itemCount = getCartItemsCount();
 
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Product', path: '/products' },
-    { name: 'Software', path: '/software' },
-    { name: 'About us', path: '/about' },
-    { name: 'Support/Resources', path: '/resources' },
-    { name: 'Blog/News', path: '/blog' },
-    { name: 'Contact us', path: '/contact' }
+    { name: 'Home', path: '/', icon: <FaHome className="w-5 h-5" /> },
+    { name: 'Product', path: '/products', icon: <FaRobot className="w-5 h-5" /> },
+    { name: 'Software', path: '/software', icon: <FaCogs className="w-5 h-5" /> },
+    { name: 'About us', path: '/about', icon: <FaUsers className="w-5 h-5" /> },
+    { name: 'Support/Resources', path: '/resources', icon: <FaHeadset className="w-5 h-5" /> },
+    { name: 'Blog/News', path: '/blog', icon: <FaNewspaper className="w-5 h-5" /> },
+    { name: 'Contact us', path: '/contact', icon: <FaEnvelope className="w-5 h-5" /> }
   ];
 
   const isActive = (path) => {
@@ -52,17 +52,20 @@ const Navbar = () => {
           </Link>
 
           {/* Center Navigation */}
-          <div className="hidden md:flex flex-1 justify-center items-center space-x-8">
+          <div className="hidden lg:flex flex-1 justify-center items-center space-x-6">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-sm font-medium transition-all duration-300 relative group
-                  ${isActive(item.path) ? 'text-white' : 'text-white/70 hover:text-white'}`}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 group
+                  ${isActive(item.path) 
+                    ? 'text-white bg-white/5 border border-white/10' 
+                    : 'text-white/70 hover:text-white hover:bg-white/5'}`}
               >
+                <span className={`transition-colors duration-300 ${isActive(item.path) ? 'text-purple-400' : 'text-white/50 group-hover:text-purple-400'}`}>
+                  {item.icon}
+                </span>
                 {item.name}
-                <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-white transform origin-left transition-transform duration-300
-                  ${isActive(item.path) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
               </Link>
             ))}
           </div>
@@ -113,7 +116,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-white/90 hover:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-lg"
+            className="lg:hidden p-2 bg-white/5 hover:bg-white/10 text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-lg border border-white/10"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
           >
@@ -153,17 +156,18 @@ const Navbar = () => {
 
           {/* Mobile Menu Content */}
           <div className="flex-1 overflow-y-auto py-4">
-            <div className="px-4 space-y-1">
+            <div className="px-4 space-y-2">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-300
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all duration-300
                     ${isActive(item.path) 
-                      ? 'bg-white/10 text-white' 
+                      ? 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-white border border-white/10' 
                       : 'text-white/70 hover:bg-white/5 hover:text-white'}`}
                 >
+                  <span className="text-purple-400/80">{item.icon}</span>
                   {item.name}
                 </Link>
               ))}
