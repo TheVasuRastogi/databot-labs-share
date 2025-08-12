@@ -104,9 +104,9 @@ const VideoPlayer = ({ src, poster, title, description }) => {
   }, []);
 
   return (
-    <div 
+          <div 
       ref={containerRef}
-      className="relative aspect-video w-full bg-[#0a0a0a] rounded-xl overflow-hidden group"
+      className="relative aspect-video w-full bg-[#0a0a0a] rounded-lg sm:rounded-xl overflow-hidden group"
     >
       {/* Video */}
       <video
@@ -114,35 +114,36 @@ const VideoPlayer = ({ src, poster, title, description }) => {
         className="w-full h-full object-cover"
         poster={poster}
         onClick={handlePlayPause}
+        playsInline
       >
         <source src={src} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
       {/* Title Overlay */}
-      <div className="absolute top-0 left-0 right-0 p-4 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
-        <h3 className="text-xl font-semibold text-white">{title}</h3>
-        <p className="text-gray-300 text-sm mt-1">{description}</p>
+      <div className="absolute top-0 left-0 right-0 p-3 sm:p-4 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
+        <h3 className="text-lg sm:text-xl font-semibold text-white">{title}</h3>
+        <p className="text-gray-300 text-xs sm:text-sm mt-1">{description}</p>
       </div>
 
       {/* Center Play Button */}
       <div className={`absolute inset-0 flex items-center justify-center ${isPlaying ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}>
         <button
           onClick={handlePlayPause}
-          className="w-20 h-20 rounded-full bg-black/50 hover:bg-black/70 transition-all duration-300 flex items-center justify-center group/play"
+          className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/50 hover:bg-black/70 transition-all duration-300 flex items-center justify-center group/play"
         >
-          <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
-            <FaPlay className="text-white text-3xl ml-2 group-hover/play:scale-110 transition-transform duration-300" />
+          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/10 flex items-center justify-center">
+            <FaPlay className="text-white text-2xl sm:text-3xl ml-2 group-hover/play:scale-110 transition-transform duration-300" />
           </div>
         </button>
       </div>
 
-      {/* Controls Overlay */}
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {/* Controls Overlay */}
+      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 sm:transition-opacity duration-300">
         {/* Progress Bar */}
         <div 
           ref={progressBarRef}
-          className="relative h-1 bg-white/20 cursor-pointer group/progress"
+          className="relative h-1 sm:h-1.5 bg-white/20 cursor-pointer group/progress touch-none"
           onClick={handleProgressClick}
         >
           <div 
@@ -150,37 +151,37 @@ const VideoPlayer = ({ src, poster, title, description }) => {
             style={{ width: `${progress}%` }}
           />
           <div 
-            className="absolute top-1/2 -translate-y-1/2 h-3 w-3 bg-blue-500 rounded-full opacity-0 group-hover/progress:opacity-100 transition-opacity duration-200"
+            className="absolute top-1/2 -translate-y-1/2 h-3 w-3 sm:h-4 sm:w-4 bg-blue-500 rounded-full opacity-0 group-hover/progress:opacity-100 transition-opacity duration-200"
             style={{ left: `${progress}%`, transform: `translate(-50%, -50%)` }}
           />
         </div>
 
         {/* Bottom Controls */}
-        <div className="px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+        <div className="px-2 sm:px-4 py-2 sm:py-3 flex items-center justify-between">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <button
               onClick={handlePlayPause}
-              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200 flex items-center justify-center"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200 flex items-center justify-center"
             >
               {isPlaying ? (
-                <FaPause className="text-white text-sm" />
+                <FaPause className="text-white text-xs sm:text-sm" />
               ) : (
-                <FaPlay className="text-white text-sm ml-0.5" />
+                <FaPlay className="text-white text-xs sm:text-sm ml-0.5" />
               )}
             </button>
-            <span className="text-white text-sm">
+            <span className="text-white text-xs sm:text-sm hidden sm:inline">
               {videoRef.current ? formatTime(videoRef.current.currentTime) : '0:00'} / {formatTime(duration)}
             </span>
           </div>
 
           <button
             onClick={handleFullscreen}
-            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200 flex items-center justify-center"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200 flex items-center justify-center"
           >
             {isFullscreen ? (
-              <FaCompress className="text-white text-sm" />
+              <FaCompress className="text-white text-xs sm:text-sm" />
             ) : (
-              <FaExpand className="text-white text-sm" />
+              <FaExpand className="text-white text-xs sm:text-sm" />
             )}
           </button>
         </div>
@@ -539,12 +540,12 @@ const Home = () => {
     >
       <div className="group relative">
         {/* Mirror Effect Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-2xl backdrop-blur-md border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.37)] transition-all duration-500 hover:scale-105 hover:-rotate-2"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-xl sm:rounded-2xl backdrop-blur-md border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.37)] transition-all duration-500 hover:scale-105 hover:-rotate-2"></div>
         
         {/* Product Card Content */}
-        <div className="relative p-6 rounded-2xl overflow-hidden h-full">
+        <div className="relative p-4 sm:p-6 rounded-xl sm:rounded-2xl overflow-hidden h-full">
           {/* Image Container */}
-          <div className="relative aspect-[16/9] mb-6 rounded-xl overflow-hidden group-hover:scale-105 transition-transform duration-500">
+          <div className="relative aspect-[16/9] mb-4 sm:mb-6 rounded-lg sm:rounded-xl overflow-hidden group-hover:scale-105 transition-transform duration-500">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-blue-500/30 mix-blend-overlay"></div>
             <img
               src={product.image}
@@ -554,56 +555,56 @@ const Home = () => {
           </div>
 
           {/* Product Info */}
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-xl font-semibold text-white group-hover:text-purple-400 transition-colors duration-300">
+                <h3 className="text-lg sm:text-xl font-semibold text-white group-hover:text-purple-400 transition-colors duration-300">
                   {product.name}
                 </h3>
-                <p className="text-gray-400">{product.category}</p>
+                <p className="text-sm sm:text-base text-gray-400">{product.category}</p>
               </div>
               <div className="flex items-center bg-white/10 px-2 py-1 rounded-full">
-                <FaStar className="text-yellow-400 mr-1" />
-                <span className="text-white">{product.rating}</span>
+                <FaStar className="text-yellow-400 mr-1 text-sm" />
+                <span className="text-white text-sm">{product.rating}</span>
               </div>
             </div>
 
             {/* Key Specifications */}
-            <div className="space-y-2">
+            <div className="space-y-1.5 sm:space-y-2">
               {(product.highlights || []).map((spec, i) => (
-                <div key={i} className="flex items-center text-sm text-gray-300">
-                  <FaCheckCircle className="text-blue-400 mr-2" />
+                <div key={i} className="flex items-center text-xs sm:text-sm text-gray-300">
+                  <FaCheckCircle className="text-blue-400 mr-2 flex-shrink-0" />
                   <span>{spec}</span>
                 </div>
               ))}
             </div>
 
-                          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                  {product.price}
-                </span>
-                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                  <Link
-                    to={`/products/${product.id}`}
-                    className="relative overflow-hidden px-4 sm:px-6 py-2 rounded-full group/button w-full sm:w-auto text-center"
-                  >
-                    {/* Button Background */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-75 group-hover/button:opacity-100 transition-opacity duration-300"></div>
-                    {/* Button Content */}
-                    <span className="relative flex items-center justify-center gap-2 text-white font-medium">
-                      View Details
-                      <FaArrowRight className="group-hover/button:translate-x-1 transition-transform duration-300" />
-                    </span>
-                  </Link>
-                  <Link
-                    to="/preorder"
-                    state={{ product: product.name }}
-                    className="relative overflow-hidden px-4 sm:px-6 py-2 rounded-full border-2 border-white text-white font-semibold hover:bg-white hover:text-indigo-600 transition-all duration-300 w-full sm:w-auto text-center"
-                  >
-                    Pre-order Now
-                  </Link>
-                </div>
+            <div className="flex flex-col gap-3">
+              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                {product.price}
+              </span>
+              <div className="flex flex-col gap-2">
+                <Link
+                  to={`/products/${product.id}`}
+                  className="relative overflow-hidden px-4 py-2 rounded-full group/button w-full text-center"
+                >
+                  {/* Button Background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-75 group-hover/button:opacity-100 transition-opacity duration-300"></div>
+                  {/* Button Content */}
+                  <span className="relative flex items-center justify-center gap-2 text-white font-medium text-sm sm:text-base">
+                    View Details
+                    <FaArrowRight className="group-hover/button:translate-x-1 transition-transform duration-300" />
+                  </span>
+                </Link>
+                <Link
+                  to="/preorder"
+                  state={{ product: product.name }}
+                  className="relative overflow-hidden px-4 py-2 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-indigo-600 transition-all duration-300 w-full text-center text-sm sm:text-base"
+                >
+                  Pre-order Now
+                </Link>
               </div>
+            </div>
           </div>
         </div>
       </div>
@@ -615,36 +616,36 @@ const Home = () => {
       <SEOHelmet />
       
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
+      <section className="relative min-h-[100svh] flex items-center justify-center text-white overflow-hidden py-16 sm:py-20">
         {/* Footer-style background overlays */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 pointer-events-none z-0"></div>
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:100px_100px] pointer-events-none"></div>
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:100px_100px] pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:50px_50px] sm:bg-[length:100px_100px] pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:50px_50px] sm:bg-[length:100px_100px] pointer-events-none"></div>
         </div>
         {/* 3D Animated Gradient Blobs */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-10 left-10 w-80 h-80 bg-gradient-to-br from-purple-500 via-blue-400 to-blue-300 opacity-60 rounded-full blur-3xl animate-blob3d1" ref={blob1} />
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-tr from-blue-500 via-purple-400 to-pink-400 opacity-50 rounded-full blur-3xl animate-blob3d2" ref={blob2} />
-          <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-gradient-to-tl from-pink-400 via-purple-400 to-blue-400 opacity-40 rounded-full blur-2xl animate-blob3d3" style={{transform: 'translate(-50%, -50%)'}} ref={blob3} />
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+          <div className="absolute top-10 left-5 sm:left-10 w-48 sm:w-80 h-48 sm:h-80 bg-gradient-to-br from-purple-500 via-blue-400 to-blue-300 opacity-60 rounded-full blur-3xl animate-blob3d1" ref={blob1} />
+          <div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-20 w-64 sm:w-96 h-64 sm:h-96 bg-gradient-to-tr from-blue-500 via-purple-400 to-pink-400 opacity-50 rounded-full blur-3xl animate-blob3d2" ref={blob2} />
+          <div className="absolute top-1/2 left-1/2 w-48 sm:w-72 h-48 sm:h-72 bg-gradient-to-tl from-pink-400 via-purple-400 to-blue-400 opacity-40 rounded-full blur-2xl animate-blob3d3" style={{transform: 'translate(-50%, -50%)'}} ref={blob3} />
         </div>
         {/* End 3D Blobs */}
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12 lg:gap-16">
             {/* Content */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="flex-1 text-center lg:text-left"
+              className="flex-1 text-center lg:text-left w-full lg:max-w-2xl"
             >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="inline-block mb-4 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+                className="inline-block mb-3 sm:mb-4 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
               >
-                <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-sm sm:text-base">
                   Welcome to the Future
                 </span>
               </motion.div>
@@ -653,10 +654,10 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 tracking-tight"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 tracking-tight"
               >
                 Next Generation
-                <span className="block mt-2 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="block mt-1 sm:mt-2 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
                   Robotics
                 </span>
               </motion.h1>
@@ -665,7 +666,7 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0"
+                className="text-sm sm:text-base md:text-lg text-gray-300 mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0"
               >
                Modular 6-DOF Semi-Industrial Robot Arm – Customizable for Any Task
               </motion.p>
@@ -674,21 +675,21 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start w-full sm:w-auto"
               >
                 <Link
                   to="/products"
-                  className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full overflow-hidden transition-all duration-300 hover:scale-105"
+                  className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 w-full sm:w-auto text-center"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="relative flex items-center justify-center gap-2 text-lg font-semibold">
+                  <span className="relative flex items-center justify-center gap-2 text-base sm:text-lg font-semibold">
                     Explore Products
                     <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
                 </Link>
                 <Link
                   to="/contact"
-                  className="px-8 py-4 bg-white/5 backdrop-blur-sm rounded-full text-white hover:bg-white/10 transition-all duration-300 text-lg font-semibold border border-white/10 hover:border-white/20"
+                  className="px-6 sm:px-8 py-3 sm:py-4 bg-white/5 backdrop-blur-sm rounded-full text-white hover:bg-white/10 transition-all duration-300 text-base sm:text-lg font-semibold border border-white/10 hover:border-white/20 w-full sm:w-auto text-center"
                 >
                   Contact Us
                 </Link>
@@ -696,19 +697,20 @@ const Home = () => {
             </motion.div>
 
             {/* Right Image Section */}
-            <div className="flex-1 relative flex items-center justify-center min-h-[400px]">
+            <div className="flex-1 relative flex items-center justify-center min-h-[250px] sm:min-h-[300px] lg:min-h-[400px] w-full max-w-lg lg:max-w-none mx-auto">
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="relative w-full max-w-xl aspect-square mx-auto"
+                className="relative w-full aspect-square max-w-[280px] sm:max-w-md lg:max-w-lg mx-auto"
               >
                 {/* Hero Image */}
-                <div className="relative z-10 w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                <div className="relative z-10 w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/20">
                   <img 
                     src="/images/hero-robot.jpg" 
                     alt="Advanced Robotics Technology" 
                     className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
+                    loading="eager"
                   />
                   {/* Overlay gradient */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/30 via-transparent to-blue-900/30"></div>
@@ -724,7 +726,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="absolute left-1/2 bottom-8 -translate-x-1/2 z-20 flex justify-center w-full"
+            className="absolute left-1/2 bottom-4 sm:bottom-8 -translate-x-1/2 z-20 flex justify-center w-full"
           >
             <button
               aria-label="Scroll to explore"
@@ -732,11 +734,10 @@ const Home = () => {
                 const section = document.getElementById('featured-products');
                 if (section) section.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/15 shadow-sm text-white font-medium text-[11px] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              style={{ minWidth: '70px', minHeight: '30px' }}
+              className="flex flex-col items-center gap-1 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/15 shadow-sm text-white font-medium text-xs sm:text-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 hover:scale-105"
             >
-              <span className="leading-tight">Scroll to explore</span>
-              <FaArrowDown className="text-xs animate-bounce mt-0.5" />
+              <span className="leading-none">Scroll to explore</span>
+              <FaArrowDown className="text-xs animate-bounce" />
             </button>
           </motion.div>
         </div>
@@ -758,17 +759,17 @@ const Home = () => {
               See the seamless journey from programming to real-world robotic action.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 px-4 sm:px-6 md:px-0">
             {/* Video Frame 1 - Placeholder */}
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-xl border-2 border-transparent hover:border-gradient-to-r hover:from-blue-400 hover:to-purple-400 transition-all duration-500 group">
+            <div className="relative rounded-xl sm:rounded-3xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-xl border-2 border-transparent hover:border-gradient-to-r hover:from-blue-400 hover:to-purple-400 transition-all duration-500 group">
               <div className="aspect-video w-full relative">
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                  <div className="text-center p-6">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/10 flex items-center justify-center">
-                      <FaRobot className="text-2xl text-white/80" />
+                  <div className="text-center p-4 sm:p-6">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-white/10 flex items-center justify-center">
+                      <FaRobot className="text-xl sm:text-2xl text-white/80" />
                     </div>
-                    <h3 className="text-xl font-semibold text-white mb-2">Programming & Control</h3>
-                    <p className="text-blue-200 text-sm">Video coming soon</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-1 sm:mb-2">Programming & Control</h3>
+                    <p className="text-blue-200 text-xs sm:text-sm">Video coming soon</p>
                   </div>
                 </div>
                 <img 
@@ -780,7 +781,7 @@ const Home = () => {
             </div>
 
             {/* Video Frame 2 - Active Video */}
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-xl border-2 border-transparent hover:border-gradient-to-r hover:from-pink-400 hover:to-blue-400 transition-all duration-500 group">
+            <div className="relative rounded-xl sm:rounded-3xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-xl border-2 border-transparent hover:border-gradient-to-r hover:from-pink-400 hover:to-blue-400 transition-all duration-500 group">
               <VideoPlayer
                 src="/videos/robot-motion.mp4"
                 poster="/images/educational-robot.jpg"
@@ -791,21 +792,21 @@ const Home = () => {
           </div>
 
           {/* Additional Information */}
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 px-4 sm:px-6 md:px-0">
             {/* Feature 1 */}
-            <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <h3 className="text-xl font-semibold mb-3 text-white">Advanced Programming</h3>
-              <p className="text-gray-300">Our robots are powered by sophisticated algorithms and AI, enabling them to adapt and learn.</p>
+            <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors duration-300">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-white">Advanced Programming</h3>
+              <p className="text-sm sm:text-base text-gray-300">Our robots are powered by sophisticated algorithms and AI, enabling them to adapt and learn.</p>
             </div>
             {/* Feature 2 */}
-            <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <h3 className="text-xl font-semibold mb-3 text-white">Precision Control</h3>
-              <p className="text-gray-300">Achieve submillimeter accuracy with our advanced motion control systems.</p>
+            <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors duration-300">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-white">Precision Control</h3>
+              <p className="text-sm sm:text-base text-gray-300">Achieve submillimeter accuracy with our advanced motion control systems.</p>
             </div>
             {/* Feature 3 */}
-            <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <h3 className="text-xl font-semibold mb-3 text-white">Real-time Monitoring</h3>
-              <p className="text-gray-300">Monitor and adjust robot performance in real-time with our advanced dashboard.</p>
+            <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors duration-300">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-white">Real-time Monitoring</h3>
+              <p className="text-sm sm:text-base text-gray-300">Monitor and adjust robot performance in real-time with our advanced dashboard.</p>
             </div>
           </div>
         </div>
@@ -838,14 +839,14 @@ const Home = () => {
           </motion.div>
           
           {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-0">
             {featuredProducts.map((product, index) => renderProductCard(product, index))}
           </div>
           {/* View More Button */}
-          <div className="flex justify-center mt-12">
+          <div className="flex justify-center mt-8 sm:mt-12 px-4 sm:px-0">
             <Link
               to="/products"
-              className="inline-flex items-center bg-gradient-to-r from-purple-500 to-blue-500 text-white px-8 py-3 rounded-full font-semibold shadow hover:from-purple-600 hover:to-blue-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg group"
+              className="inline-flex items-center bg-gradient-to-r from-purple-500 to-blue-500 text-white w-full sm:w-auto justify-center px-6 sm:px-8 py-3 rounded-full font-semibold shadow hover:from-purple-600 hover:to-blue-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-base sm:text-lg group"
               aria-label="View More Products"
             >
               View More
@@ -892,19 +893,19 @@ const Home = () => {
           <h2 className="text-4xl font-bold text-center mb-16 text-white relative z-10">
             Why Choose Us?
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-0">
             {whyChooseUs.map((item) => (
               <div
                 key={item.title}
-                className="group relative p-6 sm:p-8 rounded-3xl bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl flex flex-col items-center transition-transform duration-300 hover:scale-105 hover:shadow-2xl focus-within:scale-105 focus-within:shadow-2xl outline-none cursor-pointer"
+                className="group relative p-4 sm:p-6 rounded-xl sm:rounded-3xl bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl flex flex-col items-center transition-transform duration-300 hover:scale-105 hover:shadow-2xl focus-within:scale-105 focus-within:shadow-2xl outline-none cursor-pointer"
                 tabIndex={0}
                 aria-label={item.title}
               >
-                <span className={`inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 mb-4 rounded-full bg-gradient-to-br ${item.gradient} shadow-lg group-hover:animate-pulse group-focus:animate-pulse`}>
+                <span className={`inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 mb-3 sm:mb-4 rounded-full bg-gradient-to-br ${item.gradient} shadow-lg group-hover:animate-pulse group-focus:animate-pulse`}>
                   {item.icon}
                 </span>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2 text-white text-center">{item.title}</h3>
-                <p className="text-sm sm:text-base text-gray-300 text-center">{item.description}</p>
+                <h3 className="text-base sm:text-lg font-semibold mb-1.5 sm:mb-2 text-white text-center">{item.title}</h3>
+                <p className="text-xs sm:text-sm text-gray-300 text-center">{item.description}</p>
               </div>
             ))}
           </div>
@@ -923,22 +924,22 @@ const Home = () => {
           <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
             Our Capabilities
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-0">
             {features.map((item) => (
               <div
                 key={item.title}
-                className="group relative p-8 rounded-3xl bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl flex flex-col items-center transition-transform duration-300 hover:scale-105 hover:shadow-2xl focus-within:scale-105 focus-within:shadow-2xl outline-none cursor-pointer"
+                className="group relative p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-3xl bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl flex flex-col items-center transition-transform duration-300 hover:scale-105 hover:shadow-2xl focus-within:scale-105 focus-within:shadow-2xl outline-none cursor-pointer"
                 tabIndex={0}
                 aria-label={item.title}
               >
-                <span className={`inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br ${item.gradient} shadow-lg group-hover:animate-pulse group-focus:animate-pulse`}>
+                <span className={`inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 mb-3 sm:mb-4 rounded-full bg-gradient-to-br ${item.gradient} shadow-lg group-hover:animate-pulse group-focus:animate-pulse`}>
                   {item.icon}
                 </span>
-                <h3 className="text-xl font-semibold mb-2 text-white text-center">{item.title}</h3>
-                <p className="text-gray-300 text-center mb-6">{item.description}</p>
+                <h3 className="text-lg sm:text-xl font-semibold mb-1.5 sm:mb-2 text-white text-center">{item.title}</h3>
+                <p className="text-sm text-gray-300 text-center mb-4 sm:mb-6">{item.description}</p>
                 <a
                   href={item.link}
-                  className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full text-white text-sm font-semibold shadow hover:from-blue-600 hover:to-purple-600 transition-all duration-300 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full text-white text-sm font-semibold shadow hover:from-blue-600 hover:to-purple-600 transition-all duration-300 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400 text-center"
                   aria-label={`Learn more about ${item.title}`}
                 >
                   Learn More
@@ -958,16 +959,16 @@ const Home = () => {
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
         </div>
         <div className="container mx-auto px-4 relative z-10 flex justify-center">
-          <div className="w-full max-w-3xl mx-auto p-6 sm:p-8 md:p-12 rounded-3xl bg-white/10 backdrop-blur-lg border-2 border-transparent bg-clip-padding shadow-xl flex flex-col items-center text-center transition-all duration-500 hover:shadow-2xl ring-1 ring-blue-400/30">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-gradient-slow">
+          <div className="w-full max-w-3xl mx-auto p-4 sm:p-6 md:p-8 lg:p-12 rounded-xl sm:rounded-3xl bg-white/10 backdrop-blur-lg border-2 border-transparent bg-clip-padding shadow-xl flex flex-col items-center text-center transition-all duration-500 hover:shadow-2xl ring-1 ring-blue-400/30">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-gradient-slow px-2 sm:px-0">
               Ready to Get Started?
             </h2>
-            <p className="text-gray-200 text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto px-4 sm:px-0">
+            <p className="text-gray-200 text-sm sm:text-base md:text-lg mb-4 sm:mb-6 md:mb-8 max-w-2xl mx-auto px-4 sm:px-0">
               Join the future of robotics and discover how our solutions can transform your life.
             </p>
             <Link
               to="/products"
-              className="w-full sm:w-auto inline-flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 sm:px-8 py-3 rounded-full font-semibold shadow hover:from-blue-600 hover:to-purple-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-base sm:text-lg group"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-full font-semibold shadow hover:from-blue-600 hover:to-purple-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base md:text-lg group"
               aria-label="Browse Our Collection"
             >
               Browse Our Collection

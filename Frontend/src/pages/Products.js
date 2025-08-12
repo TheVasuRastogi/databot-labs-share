@@ -275,61 +275,69 @@ const products = [
   });
 
   return (
-    <div className="min-h-screen bg-[#0A0A0B] text-white py-20 relative">
+    <div className="min-h-screen bg-[#0A0A0B] text-white py-16 sm:py-20 relative">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-black to-blue-900/10"></div>
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:50px_50px] sm:bg-[length:100px_100px]"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:50px_50px] sm:bg-[length:100px_100px]"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            Our Products
-          </h1>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Discover our range of advanced robotic solutions, from industrial arms to mobile platforms
-          </p>
+        <div className="text-center mb-6 sm:mb-8 lg:mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 lg:mb-4 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
+              Our Products
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg text-gray-400/90 max-w-xl sm:max-w-2xl mx-auto px-4 leading-relaxed">
+              Discover our range of advanced robotic solutions, from industrial arms to mobile platforms
+            </p>
+          </motion.div>
         </div>
 
         {/* Filters */}
-        <div className="mb-12">
-          <div className="flex flex-col md:flex-row gap-6 items-center justify-between bg-[#141416] rounded-2xl p-6 border border-white/10">
-            {/* Categories */}
-            <div className="flex gap-4">
-              {categories.map(category => (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`px-6 py-2 rounded-full transition-all duration-300 ${
-                    selectedCategory === category.id
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-white/5 text-gray-400 hover:bg-white/10'
-                  }`}
-                >
-                  {category.name}
-                </button>
-              ))}
-            </div>
-
-            {/* Search */}
-            <div className="relative w-full md:w-auto">
-              <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+        <div className="mb-8 sm:mb-12">
+          <div className="flex flex-col gap-4 sm:gap-6 bg-[#141416] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/10">
+            {/* Search - Moved to top for better mobile UX */}
+            <div className="relative w-full">
+              <FaSearch className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm sm:text-base" />
               <input
                 type="text"
                 placeholder="Search products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full md:w-64 bg-white/5 border border-white/10 rounded-full py-2 pl-12 pr-4 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors duration-300"
+                className="w-full bg-white/5 border border-white/10 rounded-full py-2 sm:py-2.5 pl-10 sm:pl-12 pr-4 text-sm sm:text-base text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors duration-300"
               />
+            </div>
+
+            {/* Categories - Scrollable on mobile */}
+            <div className="overflow-x-auto pb-2 -mb-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+              <div className="flex gap-2 sm:gap-4 min-w-max">
+                {categories.map(category => (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedCategory(category.id)}
+                    className={`px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-sm sm:text-base whitespace-nowrap transition-all duration-300 ${
+                      selectedCategory === category.id
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {filteredProducts.map((product) => (
             <motion.div
               key={product.id}
@@ -338,35 +346,36 @@ const products = [
               viewport={{ once: true }}
               className="group"
             >
-              <div className="bg-[#141416] rounded-2xl border border-white/10 overflow-hidden hover:border-white/20 transition-colors duration-300">
+              <div className="bg-[#141416] rounded-xl sm:rounded-2xl border border-white/10 overflow-hidden hover:border-white/20 transition-colors duration-300">
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                  <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 flex justify-between items-end">
                     <div>
-                      <h3 className="text-xl font-semibold text-white mb-1">{product.name}</h3>
-                      <p className="text-sm text-gray-300">{product.category}</p>
+                      <h3 className="text-lg sm:text-xl font-semibold text-white mb-0.5 sm:mb-1 line-clamp-1">{product.name}</h3>
+                      <p className="text-xs sm:text-sm text-gray-300">{product.category}</p>
                     </div>
                     <div className="flex items-center bg-black/50 backdrop-blur-sm px-2 py-1 rounded-full">
-                      <FaStar className="text-yellow-400 mr-1" />
-                      <span className="text-white">{product.rating}</span>
+                      <FaStar className="text-yellow-400 mr-1 text-xs sm:text-sm" />
+                      <span className="text-white text-xs sm:text-sm">{product.rating}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-6 space-y-6">
+                <div className="p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6">
                   {/* Highlights */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-4">
                     {product.highlights.map((highlight, index) => (
                       <div
                         key={index}
-                        className="bg-white/5 rounded-lg p-3 text-sm text-gray-300"
+                        className="bg-white/5 rounded-lg p-2 sm:p-3 text-xs sm:text-sm text-gray-300"
                       >
                         {highlight}
                       </div>
@@ -375,45 +384,44 @@ const products = [
 
                   {/* Price and Stock */}
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                      <span className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                         Contact for pricing
                       </span>
-                      <div className="text-sm">
-                        <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full">
+                      <div className="text-xs sm:text-sm">
+                        <span className="bg-orange-500/20 text-orange-400 px-2 sm:px-3 py-1 rounded-full">
                           Pre-order
                         </span>
                       </div>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex flex-col gap-2">
-                      <div className="flex gap-2">
-                        <Link
-                          to={`/products/${product.id}`}
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors duration-300 text-sm"
-                        >
-                          View Details
-                          <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
-                        </Link>
-                        <button
-                          onClick={() => handlePreOrder(product)}
-                          disabled={addingToCart[product.id] || (!product.isPreorder && product.stock === 0)}
-                          className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 text-sm font-medium bg-orange-500 hover:bg-orange-600 text-white ${addingToCart[product.id] ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        >
-                          {addingToCart[product.id] ? (
-                            <>
-                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                              Adding...
-                            </>
-                          ) : (
-                            <>
-                              <FaPlus />
-                              Pre-order
-                            </>
-                          )}
-                        </button>
-                      </div>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <Link
+                        to={`/products/${product.id}`}
+                        className="flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors duration-300 text-xs sm:text-sm"
+                      >
+                        View Details
+                        <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+                      </Link>
+                      <button
+                        onClick={() => handlePreOrder(product)}
+                        disabled={addingToCart[product.id] || (!product.isPreorder && product.stock === 0)}
+                        className={`flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-lg transition-colors duration-300 text-xs sm:text-sm font-medium bg-orange-500 hover:bg-orange-600 text-white ${addingToCart[product.id] ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      >
+                        {addingToCart[product.id] ? (
+                          <>
+                            <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            <span className="sm:hidden">...</span>
+                            <span className="hidden sm:inline">Adding...</span>
+                          </>
+                        ) : (
+                          <>
+                            <FaPlus className="text-xs sm:text-sm" />
+                            Pre-order
+                          </>
+                        )}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -424,10 +432,10 @@ const products = [
 
         {/* No Results */}
         {filteredProducts.length === 0 && (
-          <div className="text-center py-12">
-            <FaRobot className="text-6xl text-gray-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">No products found</h3>
-            <p className="text-gray-400">Try adjusting your search or filters</p>
+          <div className="text-center py-8 sm:py-12">
+            <FaRobot className="text-4xl sm:text-6xl text-gray-600 mx-auto mb-3 sm:mb-4" />
+            <h3 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">No products found</h3>
+            <p className="text-sm sm:text-base text-gray-400">Try adjusting your search or filters</p>
           </div>
         )}
       </div>

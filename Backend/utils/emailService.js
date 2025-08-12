@@ -4,8 +4,8 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.ADMIN_EMAIL,
-        pass: process.env.ADMIN_EMAIL_PASSWORD.replace(/\s+/g, '') // Remove spaces from app password
+        user: process.env.ADMIN_EMAIL || '',
+        pass: process.env.ADMIN_EMAIL_PASSWORD ? process.env.ADMIN_EMAIL_PASSWORD.replace(/\s+/g, '') : '' // Remove spaces from app password
     }
 });
 
