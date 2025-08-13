@@ -54,9 +54,9 @@ const Contact = () => {
   };
 
   const officeInfo = {
-    address: "Science Park 400, 1098 XH Amsterdam, Netherlands",
-    email: "contact@databot-labs.com",
-    phone: "+31 (0)20 123 4567",
+    address: "Amsterdam, Netherlands",
+    email: "b.vanderhaagen76@gmail.com",
+    phone: "+31 6 43465990",
     hours: "Monday - Friday: 9:00 AM - 6:00 PM CET"
   };
 
