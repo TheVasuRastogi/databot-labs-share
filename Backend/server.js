@@ -19,12 +19,21 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', process.env.FRONTEND_URL, process.env.CORS_ORIGIN],
+// CORS configuration
+const corsOptions = {
+    origin: [
+        'https://databot-labs.com',
+        'https://databot-labs-share.vercel.app'
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
-}));
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    exposedHeaders: ['set-cookie'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
 
 // Import routes
 const auth = require('./routes/auth');
