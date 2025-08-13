@@ -3,15 +3,23 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaArrowLeft } from 'react-icons/fa';
 import { preOrderAPI } from '../utils/api';
+import { useAuth } from '../hooks/useAuth';
 
 const LOCAL_STORAGE_KEY = 'preorder_form';
 
 const PreOrder = () => {
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
   const [productDetails, setProductDetails] = useState(null);
 
   // Load product details from localStorage
   useEffect(() => {
+    if (!isAuthenticated) {
+      toast.error('Please login to place a pre-order');
+      navigate('/login');
+      return;
+    }
+
     const savedProduct = localStorage.getItem('preOrderProduct');
     if (!savedProduct) {
       toast.error('Please select a product first');
@@ -20,7 +28,16 @@ const PreOrder = () => {
     }
     const parsedProduct = JSON.parse(savedProduct);
     setProductDetails(parsedProduct);
-  }, [navigate]);
+
+    // Pre-fill form with user data if available
+    if (user) {
+      setForm(prev => ({
+        ...prev,
+        name: user.name || prev.name,
+        email: user.email || prev.email
+      }));
+    }
+  }, [navigate, isAuthenticated, user]);
 
   const [form, setForm] = useState({
     name: '',

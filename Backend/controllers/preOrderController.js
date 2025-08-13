@@ -11,9 +11,19 @@ exports.submitPreOrder = async (req, res, next) => {
       req.body.expectedDelivery = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000);
     }
 
+    // Ensure user is authenticated
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Please login to submit a pre-order'
+      });
+    }
+
     const preOrderData = {
       ...req.body,
-      user: req.user ? req.user._id : undefined,
+      user: req.user._id,
+      email: req.user.email, // Use authenticated user's email
+      name: req.user.name,   // Use authenticated user's name
       status: 'Pending'
     };
     
