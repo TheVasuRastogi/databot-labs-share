@@ -2,8 +2,10 @@ services:
   - type: web
     name: databot-labs-backend
     env: node
-    buildCommand: npm install
+    rootDir: Backend
+    buildCommand: npm ci || npm install
     startCommand: npm start
+    nodeVersion: 18
     envVars:
       - key: NODE_ENV
         value: production
