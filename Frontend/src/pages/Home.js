@@ -246,11 +246,11 @@ const Home = () => {
   const featuredProducts = [
     {
       id: '1',
-      name: 'Robotic Arm on Linear Rail',
-      category: 'Industrial',
+      name: 'ShowRobot Netherlands - Advanced Retail Automation',
+      category: 'Retail Automation',
       image: '/images/industrial-robot.svg',
       rating: 5.0,
-      shortDesc: 'High-precision robotic arm with linear rail system',
+      shortDesc: 'Revolutionary retail automation solution from ShowRobot Netherlands with 24/7 operation and programmable intelligence',
       highlights: [
         'Arm Length: 1.04m',
         'Total Reach: up to 3.54m',
@@ -272,11 +272,11 @@ const Home = () => {
     },
     {
       id: '2',
-      name: 'Robotic Joint Assembly',
-      category: 'Mobile Robotics',
+      name: 'ShowRobot Netherlands - Mobile Retail Assistant',
+      category: 'Retail Automation',
       image: '/images/20250616_110627.svg',
       rating: 4.9,
-      shortDesc: 'Advanced mobile robotic platform with all-terrain capabilities',
+      shortDesc: 'Advanced mobile retail automation system from ShowRobot Netherlands with 24/7 operation and programmable intelligence',
       highlights: [
         'Size: 68×42×30 cm',
         'Weight: 35 kg',
@@ -297,11 +297,11 @@ const Home = () => {
     },
     {
       id: '3',
-      name: 'Goliath Arm (Fixed)',
-      category: 'Industrial',
+      name: 'ShowRobot Netherlands - Fixed Retail Automation',
+      category: 'Retail Automation',
       image: '/images/arm.svg',
       rating: 4.8,
-      shortDesc: 'High-strength industrial robotic arm for automation',
+      shortDesc: 'High-strength retail automation system from ShowRobot Netherlands with 24/7 operation and programmable intelligence',
       highlights: [
         'Length: 1.04m',
         'Weight: 17 kg',
@@ -322,49 +322,6 @@ const Home = () => {
     }
   ];
 
-  const testimonials = [
-    {
-      id: 1,
-      name: 'John Smith',
-      role: 'Factory Manager',
-      company: 'TechManufacturing Inc.',
-      content: 'The industrial robots have increased our production efficiency by 300%. Best investment we have made.',
-      image: '/images/testimonials/john.jpg'
-    },
-    {
-      id: 2,
-      name: 'Sarah Johnson',
-      role: 'School Principal',
-      company: 'Future Academy',
-      content: 'Our students love learning with the EduBots. They make complex concepts simple and engaging.',
-      image: '/images/testimonials/sarah.jpg'
-    },
-    {
-      id: 3,
-      name: 'Mike Chen',
-      role: 'Home Automation Expert',
-      company: 'SmartHome Solutions',
-      content: 'These robots integrate seamlessly with existing smart home systems. The AI capabilities are impressive.',
-      image: '/images/testimonials/mike.jpg'
-    }
-  ];
-
-  const stats = [
-    { label: 'Robots Deployed', value: '10,000+' },
-    { label: 'Happy Customers', value: '5,000+' },
-    { label: 'Countries Served', value: '50+' },
-    { label: 'Success Rate', value: '99.9%' }
-  ];
-
-  const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    // Add newsletter subscription logic here
-    setIsSubscribed(true);
-    setEmail('');
-  };
 
   const products = [
     {
@@ -470,7 +427,28 @@ const Home = () => {
   const blob3 = useRef(null);
   // Refs for featured section
   const featuredHeader = useRef(null);
-  const productCards = useRef([]);
+  // Use Framer Motion for product card animations instead of GSAP refs
+
+  // Framer Motion variants for featured products
+  const gridVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 24, scale: 0.98 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.5, ease: 'easeOut' }
+    }
+  };
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -506,38 +484,11 @@ const Home = () => {
         }
       );
     }
-    // Product cards animation
-    productCards.current.forEach((card, idx) => {
-      if (card) {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 60, scale: 0.95, rotateY: 10 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            rotateY: 0,
-            duration: 0.8,
-            delay: idx * 0.1,
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 85%',
-            },
-          }
-        );
-      }
-    });
+    // Product cards: switched to Framer Motion variants for reliability
   }, []);
 
   const renderProductCard = (product, index) => (
-    <motion.div
-      key={product.id}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      ref={el => productCards.current[index] = el}
-    >
+    <motion.div key={product.id} variants={cardVariants}>
       <div className="group relative">
         {/* Mirror Effect Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-xl sm:rounded-2xl backdrop-blur-md border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.37)] transition-all duration-500 hover:scale-105 hover:-rotate-2"></div>
@@ -613,7 +564,11 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
-      <SEOHelmet />
+      <SEOHelmet 
+        title="ShowRobot Netherlands - Advanced Retail Automation | DataBot Labs"
+        description="Discover ShowRobot Netherlands cutting-edge retail automation solutions. 24/7 operation, programmable intelligence, and exclusive technology for modern retail environments."
+        keywords="ShowRobot Netherlands, retail automation, 24/7 operation, programmable robots, exclusive technology, Netherlands robotics, retail solutions, automation systems"
+      />
       
       {/* Hero Section */}
       <section className="relative min-h-[100svh] flex items-center justify-center text-white overflow-hidden py-16 sm:py-20">
@@ -656,9 +611,9 @@ const Home = () => {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 tracking-tight"
               >
-                Next Generation
+                ShowRobot Netherlands
                 <span className="block mt-1 sm:mt-2 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  Robotics
+                  Retail Automation
                 </span>
               </motion.h1>
 
@@ -668,7 +623,7 @@ const Home = () => {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="text-sm sm:text-base md:text-lg text-gray-300 mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0"
               >
-               Modular 6-DOF Semi-Industrial Robot Arm – Customizable for Any Task
+               Advanced retail automation solutions with 24/7 operation, programmable intelligence, and exclusive technology for modern retail environments
               </motion.p>
 
               <motion.div 
@@ -839,9 +794,15 @@ const Home = () => {
           </motion.div>
           
           {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-0">
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-0"
+            variants={gridVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
             {featuredProducts.map((product, index) => renderProductCard(product, index))}
-          </div>
+          </motion.div>
           {/* View More Button */}
           <div className="flex justify-center mt-8 sm:mt-12 px-4 sm:px-0">
             <Link
@@ -974,6 +935,88 @@ const Home = () => {
               Browse Our Collection
               <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust & Stats Band */}
+      <section className="py-10 sm:py-14 bg-black relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-black to-blue-900/10"></div>
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid grid-cols-2 lg:grid-cols-2 gap-6 text-center">
+            <div>
+              <div className="text-3xl sm:text-4xl font-extrabold text-white">99.9%</div>
+              <div className="text-blue-400 font-semibold">Uptime</div>
+              <div className="text-gray-400 text-sm">24/7 reliability</div>
+            </div>
+            <div>
+              <div className="text-3xl sm:text-4xl font-extrabold text-white">24/7</div>
+              <div className="text-blue-400 font-semibold">Support</div>
+              <div className="text-gray-400 text-sm">Round-the-clock help</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Solutions Overview */}
+      <section className="py-24 bg-black text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20"></div>
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:100px_100px]"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">Solutions Overview</h2>
+            <p className="text-gray-300 text-lg max-w-3xl mx-auto">Explore our hardware products and advanced software stack designed for rapid deployment and scalable automation.</p>
+          </div>
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            {/* Products teaser */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5"
+            >
+              <div className="aspect-[16/9]">
+                <img src="/images/robot.png" alt="Products" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-6">
+                <h3 className="text-2xl font-semibold mb-2">Robots & Components</h3>
+                <p className="text-gray-300 mb-4">Arms, mobile bases, linear rails, grippers, and vision — engineered for precision and uptime.</p>
+                <Link to="/products" className="inline-flex items-center px-5 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 font-semibold">
+                  Explore Products
+                  <FaArrowRight className="ml-2" />
+                </Link>
+              </div>
+            </motion.div>
+            {/* Software teaser */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5"
+            >
+              <div className="aspect-[16/9]">
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                  <span className="text-white">Coming Soon</span>
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-2xl font-semibold mb-2">Software Suite</h3>
+                <p className="text-gray-300 mb-4">Control, IDE, and mobile interfaces with ROS/ROS2 support, security, and analytics.</p>
+                <Link to="/software" className="inline-flex items-center px-5 py-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-all">
+                  View Software
+                  <FaArrowRight className="ml-2" />
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>

@@ -21,7 +21,7 @@ const Navbar = () => {
     { name: 'Software', path: '/software' },
     { name: 'About us', path: '/about' },
     { name: 'Support/Resources', path: '/resources' },
-    { name: 'Blog/News', path: '/blog' },
+    // { name: 'Blog/News', path: '/blog' }, // Temporarily removed
     { name: 'Contact us', path: '/contact' }
   ];
 

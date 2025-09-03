@@ -17,7 +17,7 @@ import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 import About from './pages/About';
-import Blog from './pages/Blog';
+// import Blog from './pages/Blog'; // Temporarily disabled
 import Resources from './pages/Resources';
 import Software from './pages/Software';
 import Technologies from './pages/Technologies';
@@ -54,7 +54,7 @@ function App() {
                             <Route path="/products" element={<Products />} />
                             <Route path="/products/:id" element={<ProductDetails />} />
                             <Route path="/about" element={<About />} />
-                            <Route path="/blog" element={<Blog />} />
+                            {/* <Route path="/blog" element={<Blog />} /> */}
                             <Route path="/resources" element={<Resources />} />
                             <Route path="/software" element={<Software />} />
                             <Route path="/technologies" element={<Technologies />} />
