@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaArrowLeft, FaCheckCircle, FaCogs, FaRobot, FaTools, FaCode, 
-  FaChartLine, FaShieldAlt, FaMicrochip, FaBox, FaRuler, FaBolt, 
-  FaWrench, FaCloudDownloadAlt, FaGithub, FaShoppingCart, FaPlus, FaMinus,
-  FaClock, FaPlay, FaEuroSign, FaHandshake, FaCrown, FaStar, FaUsers,
-  FaGlobe, FaAward, FaHeadset, FaCog, FaMobile, FaDesktop } from 'react-icons/fa';
+import { FaArrowLeft, FaCheckCircle, FaCogs, FaClock, FaPlay, FaEuroSign, FaCrown, FaShoppingCart } from 'react-icons/fa';
 import SEOHelmet from '../components/common/SEOHelmet';
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('features');
-  const [quantity, setQuantity] = useState(1);
   const [showVideo, setShowVideo] = useState(false);
   const [addingToCart, setAddingToCart] = useState(false);
 
