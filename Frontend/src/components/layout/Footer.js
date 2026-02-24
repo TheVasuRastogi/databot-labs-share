@@ -71,7 +71,7 @@ const Footer = () => {
               <FaArrowRight className="w-3.5 h-3.5" aria-hidden />
             </Link>
             {/* Social */}
-            <ul className="mt-8 flex items-center gap-3" role="list">
+            <ul className="mt-8 flex items-center gap-3">
               {socialLinks.map(({ name, icon: Icon, href, ariaLabel }) => (
                 <li key={name}>
                   <a
@@ -94,7 +94,7 @@ const Footer = () => {
               <h3 className="text-xs font-semibold uppercase tracking-wider text-theme-muted">
                 Quick links
               </h3>
-              <ul className="mt-4 space-y-3" role="list">
+              <ul className="mt-4 space-y-3">
                 {quickLinks.map(({ label, to }) => (
                   <li key={to}>
                     <Link
@@ -111,7 +111,7 @@ const Footer = () => {
               <h3 className="text-xs font-semibold uppercase tracking-wider text-theme-muted">
                 Categories
               </h3>
-              <ul className="mt-4 space-y-3" role="list">
+              <ul className="mt-4 space-y-3">
                 {categories.map(({ label, to }) => (
                   <li key={to}>
                     <Link
@@ -128,7 +128,7 @@ const Footer = () => {
               <h3 className="text-xs font-semibold uppercase tracking-wider text-theme-muted">
                 Contact
               </h3>
-              <ul className="mt-4 space-y-3" role="list">
+              <ul className="mt-4 space-y-3">
                 <li>
                   <a
                     href={`mailto:${contact.email}`}

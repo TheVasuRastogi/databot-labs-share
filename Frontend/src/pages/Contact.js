@@ -305,7 +305,7 @@ className="block text-sm font-medium text-gray-800 mb-1.5"
               <h2 className="text-lg font-semibold text-black">
                 Kantoor & openingstijden
               </h2>
-              <ul className="mt-4 space-y-4" role="list">
+              <ul className="mt-4 space-y-4">
                 <li className="flex gap-3">
                   <FaMapMarkerAlt
                     className="w-5 h-5 text-gray-500 shrink-0 mt-0.5"
@@ -358,7 +358,7 @@ className="block text-sm font-medium text-gray-800 mb-1.5"
               <p className="mt-1 text-sm text-gray-600">
                 Verbind en ontvang updates van het team.
               </p>
-              <ul className="mt-4 flex flex-wrap gap-3" role="list">
+              <ul className="mt-4 flex flex-wrap gap-3">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
                   return (
@@ -391,7 +391,7 @@ className="block text-sm font-medium text-gray-800 mb-1.5"
         <p className="mt-1 text-sm text-gray-600">
           Korte antwoorden op veelgestelde vragen.
         </p>
-        <ul className="mt-6 divide-y divide-gray-200" role="list">
+        <ul className="mt-6 divide-y divide-gray-200">
           {faqs.map((faq, idx) => (
             <li key={idx} className="py-4 first:pt-0">
               <button
