@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { COMPANY_LOGO } from '../../utils/brandAssets';
 
 const navItems = [
   { name: 'Home', path: '/' },
@@ -44,9 +45,9 @@ const Navbar = () => {
               aria-label="DataBot Labs Home"
             >
               <img
-                src="/images/databot-logo.jpg"
-                alt=""
-                className="h-9 w-9 rounded-full object-cover group-hover:opacity-90 transition-opacity"
+                src={COMPANY_LOGO}
+                alt="DataBot Labs logo"
+                className="h-9 w-auto object-contain group-hover:opacity-90 transition-opacity"
               />
               <span className="text-base sm:text-lg font-semibold tracking-tight text-[#1a1a1a] whitespace-nowrap">
                 DataBot Labs

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { submitContactForm } from '../utils/formspree';
 import {
   FaMapMarkerAlt,
   FaEnvelope,
@@ -102,6 +103,7 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [openFAQ, setOpenFAQ] = useState(null);
 
   const handleChange = (e) => {
@@ -111,12 +113,18 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+    setSubmitError('');
+    setIsSubmitted(false);
+
+    try {
+      await submitContactForm(formData);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      setSubmitError(error.message || 'Unable to send your message right now. Please try again.');
+    } finally {
       setIsSubmitting(false);
-      setTimeout(() => setIsSubmitted(false), 3000);
-    }, 1500);
+    }
   };
 
   return (
@@ -273,6 +281,11 @@ className="block text-sm font-medium text-gray-800 mb-1.5"
                     placeholder="Uw bericht…"
                   />
                 </div>
+                {submitError && (
+                  <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3" role="alert">
+                    {submitError}
+                  </p>
+                )}
                 <button
                   type="submit"
                   disabled={isSubmitting}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaRobot, FaStar, FaArrowRight, FaChevronDown, FaCog, FaShieldAlt, FaBolt } from 'react-icons/fa';
 import SEOHelmet from '../components/common/SEOHelmet';
+import { PRODUCT_IMAGES } from '../utils/productImages';
 
 const faqs = [
   {
@@ -50,7 +51,7 @@ const Products = () => {
       id: '1',
       name: 'Goliath ShowRobot - Advanced',
       category: 'Retail Automation',
-      image: '/images/goliath_alum.jpg',
+      image: PRODUCT_IMAGES['1'],
       rating: 5.0,
       shortDesc: 'Revolutionaire oplossing met 24/7 inzet en programmeerbare intelligentie',
       highlights: [
@@ -69,7 +70,7 @@ const Products = () => {
       id: '2',
       name: 'Goliath - Mobiele Assistent',
       category: 'Automation',
-      image: '/images/goliath_mobile.jpg',
+      image: PRODUCT_IMAGES['2'],
       rating: 4.9,
       shortDesc: 'Geavanceerd mobiel systeem met robotarm en programmeerbare intelligentie',
       highlights: [
@@ -88,7 +89,7 @@ const Products = () => {
       id: '3',
       name: 'Goliath Linear Railed',
       category: 'Automation',
-      image: '/images/goliath_linear.jpg',
+      image: PRODUCT_IMAGES['3'],
       rating: 4.8,
       shortDesc: 'Krachtig retailautomatiseringssysteem met 24/7 inzet en programmeerbare intelligentie',
       highlights: [
@@ -235,11 +236,11 @@ const Products = () => {
                   className="group bg-white rounded-2xl border border-[#e8eaed] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.12)] hover:border-[#dfe1e4] transition-all duration-300 flex flex-col"
                 >
                   <Link to={`/products/${product.id}`} className="block flex-1 flex flex-col">
-                    <div className="relative aspect-[4/3] overflow-hidden bg-[#f0f1f3]">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-b from-[#eef0f2] via-[#f5f6f8] to-white">
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0f1419]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

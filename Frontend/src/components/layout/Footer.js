@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { COMPANY_LOGO } from '../../utils/brandAssets';
 import {
   FaEnvelope,
   FaPhone,
@@ -55,7 +56,7 @@ const Footer = () => {
                 Databot Labs
               </span>
               <img
-                src="/images/databot-logo.jpg"
+                src={COMPANY_LOGO}
                 alt="DataBot Labs logo"
                 className="h-10 w-auto object-contain"
               />

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { COMPANY_LOGO } from '../../utils/brandAssets';
 
 const SEOHelmet = ({ 
   title = 'DataBot Labs - Robotics & Automation',
@@ -21,8 +22,9 @@ const SEOHelmet = ({
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
       {/* Icons */}
-      <link rel="icon" href="/images/databot-logo.svg" type="image/svg+xml" />
-      <link rel="apple-touch-icon" href="/images/databot-logo.svg" />
+      <link rel="icon" href={COMPANY_LOGO} type="image/jpeg" />
+      <link rel="shortcut icon" href={COMPANY_LOGO} type="image/jpeg" />
+      <link rel="apple-touch-icon" href={COMPANY_LOGO} />
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />

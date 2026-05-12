@@ -16,6 +16,7 @@ import {
   FaBolt,
 } from 'react-icons/fa';
 import SEOHelmet from '../components/common/SEOHelmet';
+import { PRODUCT_IMAGES } from '../utils/productImages';
 
 const SPLINE_SCENE_URL = 'https://prod.spline.design/2mDF77eks5-m3PtF/scene.splinecode';
 
@@ -24,21 +25,21 @@ const featuredProducts = [
     id: '1',
     name: 'Goliath ShowRobot - Advanced',
     category: 'Retailautomatisering',
-    image: '/images/goliath_alum.jpg',
+    image: PRODUCT_IMAGES['1'],
     shortDesc: '24/7 inzetbaar met programmeerbare intelligentie en precisie-automatisering.',
   },
   {
     id: '2',
     name: 'Goliath - Mobiele Assistent',
     category: 'Automatisering',
-    image: '/images/goliath_mobile.jpg',
+    image: PRODUCT_IMAGES['2'],
     shortDesc: 'Geavanceerd mobiel systeem met robotarm en programmeerbare intelligentie.',
   },
   {
     id: '3',
     name: 'Goliath Linear Railed',
     category: 'Automatisering',
-    image: '/images/goliath_linear.jpg',
+    image: PRODUCT_IMAGES['3'],
     shortDesc: 'Krachtige retailautomatisering met 24/7 inzet.',
   },
 ];
@@ -220,11 +221,11 @@ const Home = () => {
                   to={`/products/${product.id}`}
                   className="group block h-full bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden hover:border-gray-300 hover:shadow-lg transition-all duration-300"
                 >
-                  <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                  <div className="aspect-[4/3] overflow-hidden bg-gradient-to-b from-[#eef0f2] via-[#f5f6f8] to-white">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
                       loading={index === 0 ? 'eager' : 'lazy'}
                     />
                   </div>
