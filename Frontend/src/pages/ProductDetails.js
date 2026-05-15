@@ -30,8 +30,6 @@ const products = {
     image: getProductImage('1'),
     video: '/videos/robot-motion.mp4',
     rating: 5.0,
-    price: 25999,
-    stock: 5,
     highlights: ['Armlengte: 1,04 m', 'Totale reikwijdte: 84 m', 'Precisie: ±0,1 mm', 'ROS2-compatibel'],
     description:
       'Revolutionary retail automation solution from ShowRobot Netherlands, featuring 24/7 operation, programmable intelligence, and exclusive technology for modern retail environments.',
@@ -93,16 +91,14 @@ const products = {
         description: 'Proprietary ShowRobot Netherlands technology with cutting-edge retail automation capabilities.',
       },
       {
-        title: 'Affordable Pricing',
+        title: 'Flexible commercial options',
         icon: FaEuroSign,
-        description: 'Competitive pricing with flexible rental, purchase, and service contract options.',
+        description: 'Rental, purchase, and service contract options — contact us for pricing.',
       },
     ],
     pricing: {
       rental: {
         title: 'Rental Option',
-        price: '€2,999',
-        period: 'per month',
         features: [
           'Full system access',
           '24/7 technical support',
@@ -114,8 +110,6 @@ const products = {
       },
       purchase: {
         title: 'Purchase',
-        price: '€25,999',
-        period: 'one-time',
         features: [
           'Complete ownership',
           'Lifetime warranty',
@@ -127,8 +121,6 @@ const products = {
       },
       service: {
         title: 'Service Contract',
-        price: '€1,999',
-        period: 'per month',
         features: [
           'Full maintenance service',
           'Priority support',
@@ -172,8 +164,6 @@ const products = {
     image: getProductImage('2'),
     video: '/videos/robot-motion.mp4',
     rating: 4.9,
-    price: 18999,
-    stock: 0,
     highlights: ['Afmetingen: 68×42×30 cm', 'Gewicht: 35 kg', '4× 80W BLDC-motoren', 'LIDAR-navigatie'],
     description:
       'Advanced mobile retail automation system from ShowRobot Netherlands, featuring 24/7 customer service, programmable navigation, and exclusive retail technology.',
@@ -235,16 +225,14 @@ const products = {
         description: 'Proprietary ShowRobot Netherlands mobile technology with cutting-edge retail capabilities.',
       },
       {
-        title: 'Affordable Pricing',
+        title: 'Flexible commercial options',
         icon: FaEuroSign,
-        description: 'Competitive pricing with flexible rental, purchase, and service contract options.',
+        description: 'Rental, purchase, and service contract options — contact us for pricing.',
       },
     ],
     pricing: {
       rental: {
         title: 'Rental Option',
-        price: '€1,999',
-        period: 'per month',
         features: [
           'Full mobile system access',
           '24/7 technical support',
@@ -256,8 +244,6 @@ const products = {
       },
       purchase: {
         title: 'Purchase',
-        price: '€18,999',
-        period: 'one-time',
         features: [
           'Complete ownership',
           'Lifetime warranty',
@@ -269,8 +255,6 @@ const products = {
       },
       service: {
         title: 'Service Contract',
-        price: '€1,299',
-        period: 'per month',
         features: [
           'Full maintenance service',
           'Priority support',
@@ -311,8 +295,6 @@ const products = {
     image: getProductImage('3'),
     video: '/videos/robot-motion.mp4',
     rating: 4.8,
-    price: 22999,
-    stock: 3,
     highlights: ['Lengte: 1,04 m', 'Gewicht: 17 kg', 'Industriekwaliteit', 'Hoge precisie'],
     description:
       'High-strength retail automation system from ShowRobot Netherlands, built for 24/7 operation, programmable intelligence, and exclusive retail technology.',
@@ -360,16 +342,14 @@ const products = {
         description: 'Proprietary ShowRobot Netherlands fixed automation technology with cutting-edge capabilities.',
       },
       {
-        title: 'Affordable Pricing',
+        title: 'Flexible commercial options',
         icon: FaEuroSign,
-        description: 'Competitive pricing with flexible rental, purchase, and service contract options.',
+        description: 'Rental, purchase, and service contract options — contact us for pricing.',
       },
     ],
     pricing: {
       rental: {
         title: 'Rental Option',
-        price: '€2,299',
-        period: 'per month',
         features: [
           'Full fixed system access',
           '24/7 technical support',
@@ -381,8 +361,6 @@ const products = {
       },
       purchase: {
         title: 'Purchase',
-        price: '€22,999',
-        period: 'one-time',
         features: [
           'Complete ownership',
           'Lifetime warranty',
@@ -394,8 +372,6 @@ const products = {
       },
       service: {
         title: 'Service Contract',
-        price: '€1,499',
-        period: 'per month',
         features: [
           'Full maintenance service',
           'Priority support',
@@ -452,10 +428,6 @@ const ProductDetails = () => {
     );
   }
 
-  const purchasePlan =
-    Object.values(product.pricing).find((plan) => plan.popular) || Object.values(product.pricing)[0];
-  const stockLabel = product.stock > 0 ? `${product.stock} in stock` : 'Available on request';
-
   return (
     <div className="min-h-screen w-full bg-[#f7f8fa] text-[#1a1a1a]">
       <SEOHelmet
@@ -499,9 +471,6 @@ const ProductDetails = () => {
                 <span className="inline-flex items-center gap-1 rounded-lg bg-white/10 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
                   <FaStar className="text-amber-400" />
                   {product.rating}
-                </span>
-                <span className="rounded-lg bg-white/10 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
-                  {stockLabel}
                 </span>
               </div>
               <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
@@ -572,19 +541,17 @@ const ProductDetails = () => {
 
           <div className="space-y-6 lg:sticky lg:top-28">
             <div className="rounded-2xl border border-[#e8eaed] bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
-              <p className="text-sm font-medium uppercase tracking-[0.16em] text-[#737373]">Starting from</p>
-              <div className="mt-2 flex items-end gap-2">
-                <span className="text-3xl font-bold text-[#1a1a1a]">{purchasePlan.price}</span>
-                <span className="pb-1 text-sm text-[#525252]">{purchasePlan.period}</span>
-              </div>
+              <p className="text-sm font-medium uppercase tracking-[0.16em] text-[#737373]">Pricing</p>
+              <p className="mt-2 text-2xl sm:text-3xl font-bold text-[#1a1a1a]">Contact for pricing</p>
               <p className="mt-3 text-sm leading-relaxed text-[#525252]">
-                Flexible rental, purchase, and service contract options are available for this platform.
+                Flexible rental, purchase, and service contract options are available. Contact us for a tailored quote.
               </p>
               <Link
                 to="/contact"
                 className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0f1419] px-5 py-3 text-sm font-semibold text-white hover:bg-[#1a222d] transition-colors"
               >
-                Neem contact op over dit product
+                Contact for pricing
+                <FaArrowRight className="text-xs" />
               </Link>
             </div>
 
@@ -613,9 +580,9 @@ const ProductDetails = () => {
       <section className="border-t border-[#e8eaed] bg-white">
         <div className={`container mx-auto px-4 sm:px-6 ${CONTENT_WIDTH} py-12 sm:py-16`}>
           <div className="max-w-2xl">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#1a1a1a]">Pricing options</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1a1a1a]">Deployment options</h2>
             <p className="mt-2 text-sm sm:text-base text-[#525252] leading-relaxed">
-              Choose the deployment model that fits your rollout, support needs, and budget.
+              Choose the model that fits your rollout and support needs. Contact us for pricing on each option.
             </p>
           </div>
 
@@ -633,10 +600,7 @@ const ProductDetails = () => {
                   </span>
                 )}
                 <h3 className="text-lg font-semibold text-[#1a1a1a]">{plan.title}</h3>
-                <div className="mt-3 flex items-end gap-2">
-                  <span className="text-3xl font-bold text-[#1a1a1a]">{plan.price}</span>
-                  <span className="pb-1 text-sm text-[#525252]">{plan.period}</span>
-                </div>
+                <p className="mt-3 text-lg font-semibold text-[#1a1a1a]">Contact for pricing</p>
                 <ul className="mt-5 space-y-3 text-sm text-[#525252]">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2">
@@ -653,7 +617,7 @@ const ProductDetails = () => {
                       : 'border border-[#e8eaed] bg-white text-[#1a1a1a] hover:bg-[#f7f8fa]'
                   }`}
                 >
-                  Discuss this option
+                  Contact for pricing
                 </Link>
               </div>
             ))}
