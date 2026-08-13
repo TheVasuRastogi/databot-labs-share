@@ -39,6 +39,11 @@ const contact = {
   address: 'Grondzeilersplantsoen 53, 1333 BS Almere, Netherlands',
 };
 
+const CREDIT = {
+  label: 'Rastogi Codeworks',
+  href: 'https://www.linkedin.com/company/rastogicodeworks',
+};
+
 const Footer = () => {
   return (
     <footer className="bg-white border-t border-gray-200" role="contentinfo">
@@ -161,12 +166,20 @@ const Footer = () => {
       {/* Bottom bar */}
       <div className="border-t border-gray-200 bg-gray-50/80">
         <div className={`${FOOTER_WIDTH} mx-auto px-4 sm:px-6 py-5`}>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-6">
             <p className="text-xs text-theme-muted">
               © {new Date().getFullYear()} DataBot-Labs. All rights reserved.
             </p>
             <p className="text-xs text-theme-muted">
-              Advanced robotics & automation
+              Developed, designed and maintained by{' '}
+              <a
+                href={CREDIT.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-theme hover:underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 rounded"
+              >
+                {CREDIT.label}
+              </a>
             </p>
           </div>
         </div>
