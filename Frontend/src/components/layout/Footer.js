@@ -41,7 +41,7 @@ const contact = {
 
 const CREDIT = {
   label: 'Rastogi Codeworks',
-  href: 'https://www.linkedin.com/company/rastogicodeworks',
+  href: 'https://www.rastogicodeworks.com/built-by?utm_source=databotlabs&utm_medium=referral&utm_campaign=footer',
 };
 
 const Footer = () => {
